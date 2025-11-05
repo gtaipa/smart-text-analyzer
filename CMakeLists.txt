@@ -3,4 +3,5 @@ project(ProgetoAEDLP1 C)
 
 set(CMAKE_C_STANDARD 17)
 
-add_executable(ProgetoAEDLP1 main.c)
+add_executable(ProgetoAEDLP1 main.c
+)
