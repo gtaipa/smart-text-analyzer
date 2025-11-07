@@ -82,6 +82,44 @@ void libertarMatriz(MatrizTexto m) {
     }
 }
 
+void pesquisarTexto(MatrizTexto m, const char *palavra) {
+    int encontrada=0;
+    for(int i=0;i<m.linhas_usadas;i++) {
+        if(strstr(m.linhas[i],palavra)!=NULL) {
+            printf("Linha %d: %s\n",i,m.linhas[i]);
+            encontrada++;
+        }
+    }
+    if(encontrada==0)
+        printf("Nenhuma linha contém \"%s\".\n",palavra);
+    else
+        printf("%d linha(s) encontradas.\n",encontrada);
+}
+
+int removerLinha(MatrizTexto *m,int indice) {
+    if(indice<0 ||indice>= m->linhas_usadas) {
+        printf("indice fora dos limites! \n");
+        return 0;
+    }
+    free(m->linhas[indice]);
+    for(int i=indice;i < m->linhas_usadas;i++) {
+        m->linhas[i] = m->linhas[i+1];
+    }
+    m->linhas_usadas--;
+    printf("linha %d removida.\n",indice);
+    return 1;
+}
+int removerLinhaPorConteudo(MatrizTexto *m, const char *frase) {
+    for (int i = 0; i < m->linhas_usadas; i++) {
+        if (strcmp(m->linhas[i], frase) == 0) {
+            return removerLinha(m, i);
+        }
+    }
+    printf("Nenhuma linha igual a \"%s\" foi encontrada.\n", frase);
+    return 0;
+}
+
+
 // =============================================================
 //  Funções auxiliares de tokens
 // =============================================================
@@ -107,7 +145,7 @@ int adicionarToken(MatrizTokens *t, const char *token) {
         }
         t->tokens = novos;
         t->capacidade = nova_cap;
-        printf("🔄 Tokens redimensionados para capacidade %d.\n", nova_cap);
+        printf("Tokens redimensionados para capacidade %d.\n", nova_cap);
     }
 
     t->tokens[t->usados] = malloc(strlen(token) + 1);
@@ -122,6 +160,33 @@ void listarTokens(MatrizTokens t) {
         printf("[%d] %s\n", i, t.tokens[i]);
     }
 }
+int removerToken(MatrizTokens *t, int indice) {
+    if (indice < 0 || indice >= t->usados) {
+        printf("Índice de token fora dos limites!\n");
+        return 0;
+    }
+
+    free(t->tokens[indice]);
+
+    for (int i = indice; i < t->usados - 1; i++) {
+        t->tokens[i] = t->tokens[i + 1];
+    }
+
+    t->usados--;
+    printf("Token %d removido com sucesso.\n", indice);
+    return 1;
+}
+
+int removerTokenPorConteudo(MatrizTokens *t, const char *token) {
+    for (int i = 0; i < t->usados; i++) {
+        if (strcmp(t->tokens[i], token) == 0) {
+            return removerToken(t, i);
+        }
+    }
+    printf("Token \"%s\" não encontrado.\n", token);
+    return 0;
+}
+
 
 void libertarTokens(MatrizTokens t) {
     for (int i = 0; i < t.usados; i++) {
@@ -134,7 +199,6 @@ void libertarTokens(MatrizTokens t) {
 //  Programa principal (testes automáticos)
 // =============================================================
 int main() {
-
     printf("=== Início dos testes automáticos ===\n");
 
     // Teste 1: criar matriz de texto
@@ -147,10 +211,9 @@ int main() {
     // Teste 2: redimensionar automaticamente
     printf("\n[2] Adicionar mais frases para forçar redimensionamento...\n");
     adicionarLinha(&texto, "extra line that triggers resize");
-
     listarMatriz(texto);
 
-    // Teste 3: criar matriz de tokens
+    // Teste 3: criar e listar tokens
     printf("\n[3] Criar e listar tokens...\n");
     MatrizTokens tokens = criarMatrizTokens(4);
     adicionarToken(&tokens, "the");
@@ -158,15 +221,38 @@ int main() {
     adicionarToken(&tokens, "dog");
     adicionarToken(&tokens, "runs");
     adicionarToken(&tokens, "eats");
+    listarTokens(tokens);
 
+    // Teste 4: pesquisa
+    printf("\n[4] Teste de pesquisa...\n");
+    pesquisarTexto(texto, "cat");
+    pesquisarTexto(texto, "dog");
+    pesquisarTexto(texto, "banana");
+
+    // Teste 5: remoção por índice
+    printf("\n[5] Remover linha 1 (\"the dog runs\")...\n");
+    removerLinha(&texto, 1);
+    listarMatriz(texto);
+
+    // Teste 6: remoção por conteúdo
+    printf("\n[6] Remover linha por conteúdo (\"a cat eats\")...\n");
+    removerLinhaPorConteudo(&texto, "a cat eats");
+    listarMatriz(texto);
+
+    printf("\n[7] Remover token por índice (2)...\n");
+    removerToken(&tokens, 2);
+    listarTokens(tokens);
+
+    printf("\n[8] Remover token por conteúdo (\"eats\")...\n");
+    removerTokenPorConteudo(&tokens, "eats");
     listarTokens(tokens);
 
     // Libertar memória
-    printf("\n[4] Libertar memória...\n");
+    printf("\n[9] Libertar memória...\n");
     libertarMatriz(texto);
     libertarTokens(tokens);
 
-    printf("\n✅ Teste R1.1 concluído com sucesso!\n");
+    printf("\n✅ Teste R1.2 concluído com sucesso!\n");
     printf("=== Fim dos testes ===\n");
 
     return 0;
