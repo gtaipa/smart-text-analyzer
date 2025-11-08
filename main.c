@@ -127,6 +127,57 @@ char* encontrarParMaisFrequente(MatrizTexto m_texto, MatrizTokens m_tokens, int 
 }
 
 
+// =============================================================
+//  Tokenizacao das frases (R1.4)
+// =============================================================
+
+int* tokenizarFrase(const char *frase, MatrizTokens tokens, int *n_ids) {
+    int capacidade = 16;
+    int usados = 0;
+    int *ids = malloc(capacidade * sizeof(int));
+    if (ids == NULL) {
+        printf("Erro: sem memoria para tokenizacao.\n");
+        exit(1);
+    }
+
+    int len = strlen(frase);
+    int i = 0;
+
+    while (i < len) {
+        int melhor_id = -1;
+        int melhor_tamanho = 0;
+
+        // procura o token mais longo que encaixa na posicao atual
+        for (int t = 0; t < tokens.usados; t++) {
+            int tam = strlen(tokens.tokens[t]);
+            if (tam > melhor_tamanho && strncmp(frase + i, tokens.tokens[t], tam) == 0) {
+                melhor_id = t;
+                melhor_tamanho = tam;
+            }
+        }
+
+        if (melhor_id != -1) {
+            // guarda o id do token encontrado
+            if (usados == capacidade) {
+                capacidade *= 2;
+                ids = realloc(ids, capacidade * sizeof(int));
+            }
+            ids[usados++] = melhor_id;
+            i += melhor_tamanho;
+        } else {
+            // se nao encontrar token, avanca 1 caractere e guarda -1
+            if (usados == capacidade) {
+                capacidade *= 2;
+                ids = realloc(ids, capacidade * sizeof(int));
+            }
+            ids[usados++] = -1; // token desconhecido
+            i++;
+        }
+    }
+
+    *n_ids = usados;
+    return ids;
+}
 
 
 
