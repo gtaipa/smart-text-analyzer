@@ -1,183 +1,171 @@
 #include "manipulacao_matrizes.h"
-int calcularAlfabetoTokens(MatrizTexto *texto_corpus,
-                           MatrizTokens *alfabeto_tokens,
-                           int num_tokens_desejado){
+int adicionarToken(MatrizTokens *m, const char *novo_token) {
+    if (m->usados >= MAX_TOKENS)
+        return 0;
+    m->tokens[m->usados] = strdup(novo_token);
+    if (m->tokens[m->usados] == NULL)
+        return 0;
+    m->usados++;
+    return 1;
+}
 
-                           }
-
-
-/**
- * @brief Percorre o corpus e o alfabeto atual para encontrar o par de tokens
- * adjacentes mais frequente.
- * * Nota: A implementação real pode ser complexa. Esta função idealmente retorna o novo
- * token que deve ser criado (a fusão dos dois tokens mais frequentes).
- * * @param m_texto A MatrizTexto contendo as frases do corpus.
- * @param m_tokens A MatrizTokens com o alfabeto de tokens atual.
- * @param token1_out Ponteiro para uma string onde o primeiro token do par mais frequente será armazenado.
- * @param token2_out Ponteiro para uma string onde o segundo token do par mais frequente será armazenado.
- * @return int Retorna a frequência máxima encontrada, ou 0 se nenhum par for encontrado.
- */
-int encontrarParMaisFrequente(MatrizTexto m_texto,
-                              MatrizTokens m_tokens,
-                              char **token1_out,
-                              char **token2_out);
-
-
-/**
-* @brief Atualiza o corpus substituindo todas as ocorrências do par de tokens
-* especificado pelo seu novo token fundido.
-* * Esta função deve reescrever as linhas da MatrizTexto de forma eficiente.
-* * @param m_texto Ponteiro para a MatrizTexto a ser atualizada.
-* @param par_a_fundir O novo token (string) resultante da fusão, ex: "ar" de "a" + "r".
-* @param token1 O primeiro token da fusão, ex: "a".
-* @param token2 O segundo token da fusão, ex: "r".
-* @return int Retorna o número de fusões efetuadas, ou -1 em caso de erro.
-*/
-int aplicarFusaoNoCorpus(MatrizTexto *m_texto,
-                         const char *token1,
-                         const char *token2);
+// ----------------------------------------------------
+// R1.3 - Inicializar tokens únicos (alfabeto base)
+// ----------------------------------------------------
 int inicializarTokensUnicos(MatrizTexto m_texto, MatrizTokens *m_tokens) {
-    char vistos[256] = {0};
+    unsigned char vistos[256] = {0};
     char token[2];
 
     for (int i = 0; i < m_texto.linhas_usadas; i++) {
-        for (int j = 0; m_texto.linhas[i][j] != '\0'; j++) {
-            char c = m_texto.linhas[i][j];
-
-            if (vistos[(unsigned char)c] == 0) {
-                vistos[(unsigned char)c] = 1;
-                token[0] = c;
+        char *linha = m_texto.linhas[i];
+        for (int j = 0; linha[j] != '\0'; j++) {
+            unsigned char c = (unsigned char)linha[j];
+            if (!vistos[c]) {
+                vistos[c] = 1;
+                token[0] = linha[j];
                 token[1] = '\0';
-                adicionarToken(m_tokens, token);
+                if (!adicionarToken(m_tokens, token))
+                    return 0;
             }
         }
     }
-
-    printf("Total de tokens únicos: %d\n", m_tokens->usados);
     return 1;
 }
-/**
- * @brief Encontra o par de tokens (dois caracteres) mais frequente no texto.
- * @param m_texto Matriz com as linhas do texto.
- * @param m_tokens Matriz com os tokens únicos.
- * @param par_max_freq Ponteiro onde será guardada a frequência do par mais comum.
- * @return Ponteiro para uma string com o par mais frequente, ou NULL se não existir.
- */
-char* encontrarParMaisFrequente(MatrizTexto m_texto, MatrizTokens m_tokens, int *par_max_freq) {
+
+// ----------------------------------------------------
+// R1.4 - Encontrar o par mais frequente no corpus
+// ----------------------------------------------------
+char *encontrarParMaisFrequente(MatrizTexto m_texto, MatrizTokens m_tokens, int *freq_max) {
     int max_frequencia = 0;
     char *melhor_par = NULL;
-    char token_temp[3];
+    char temp[3];
 
-    // Se houver menos de 2 tokens, não há pares possíveis
     if (m_tokens.usados < 2) {
-        *par_max_freq = 0;
+        *freq_max = 0;
         return NULL;
     }
 
     for (int i = 0; i < m_tokens.usados; i++) {
-        char *token1 = m_tokens.tokens[i];
-        if (strlen(token1) > 1) continue;
+        char *t1 = m_tokens.tokens[i];
+        if (strlen(t1) > 1) continue;
 
         for (int j = 0; j < m_tokens.usados; j++) {
-            char *token2 = m_tokens.tokens[j];
-            if (strlen(token2) > 1) continue;
+            char *t2 = m_tokens.tokens[j];
+            if (strlen(t2) > 1) continue;
 
-            // Cria o par T1T2 (ex: "ab")
-            token_temp[0] = token1[0];
-            token_temp[1] = token2[0];
-            token_temp[2] = '\0';
+            temp[0] = t1[0];
+            temp[1] = t2[0];
+            temp[2] = '\0';
 
             int freq_atual = 0;
 
-            // Conta quantas vezes o par aparece no texto
             for (int k = 0; k < m_texto.linhas_usadas; k++) {
                 char *linha = m_texto.linhas[k];
                 char *ptr = linha;
-
-                while ((ptr = strstr(ptr, token_temp)) != NULL) {
+                while ((ptr = strstr(ptr, temp)) != NULL) {
                     freq_atual++;
                     ptr += 2;
                 }
             }
 
-            // Atualiza o par mais frequente se necessário
             if (freq_atual > max_frequencia) {
                 max_frequencia = freq_atual;
-
-                if (melhor_par != NULL) free(melhor_par);
-                melhor_par = strdup(token_temp);
-
-                if (melhor_par == NULL) {
-                    printf("Erro: falha de memória.\n");
-                    *par_max_freq = 0;
-                    return NULL;
-                }
+                free(melhor_par);
+                melhor_par = strdup(temp);
+                if (!melhor_par) return NULL;
             }
         }
     }
 
-    *par_max_freq = max_frequencia;
-
-    if (max_frequencia > 0)
-        printf("Par mais frequente: '%s' (%d ocorrencias)\n", melhor_par, max_frequencia);
-    else
-        printf("Nenhum par encontrado.\n");
-
+    *freq_max = max_frequencia;
     return melhor_par;
 }
 
+// ----------------------------------------------------
+// R1.5 - Aplicar fusão no corpus
+// ----------------------------------------------------
+int aplicarFusaoNoCorpus(MatrizTexto *m_texto, const char *token1, const char *token2) {
+    int fusoes = 0;
+    char par[3] = {token1[0], token2[0], '\0'};
 
-// =============================================================
-//  Tokenizacao das frases (R1.4)
-// =============================================================
+    for (int i = 0; i < m_texto->linhas_usadas; i++) {
+        char *orig = m_texto->linhas[i];
+        int tam_orig = strlen(orig);
 
-int* tokenizarFrase(const char *frase, MatrizTokens tokens, int *n_ids) {
-    int capacidade = 16;
-    int usados = 0;
-    int *ids = malloc(capacidade * sizeof(int));
-    if (ids == NULL) {
-        printf("Erro: sem memoria para tokenizacao.\n");
-        exit(1);
-    }
-
-    int len = strlen(frase);
-    int i = 0;
-
-    while (i < len) {
-        int melhor_id = -1;
-        int melhor_tamanho = 0;
-
-        // procura o token mais longo que encaixa na posicao atual
-        for (int t = 0; t < tokens.usados; t++) {
-            int tam = strlen(tokens.tokens[t]);
-            if (tam > melhor_tamanho && strncmp(frase + i, tokens.tokens[t], tam) == 0) {
-                melhor_id = t;
-                melhor_tamanho = tam;
-            }
+        // Contar ocorrências do par
+        int count = 0;
+        char *ptr = orig;
+        while ((ptr = strstr(ptr, par)) != NULL) {
+            count++;
+            ptr += 2;
         }
 
-        if (melhor_id != -1) {
-            // guarda o id do token encontrado
-            if (usados == capacidade) {
-                capacidade *= 2;
-                ids = realloc(ids, capacidade * sizeof(int));
-            }
-            ids[usados++] = melhor_id;
-            i += melhor_tamanho;
-        } else {
-            // se nao encontrar token, avanca 1 caractere e guarda -1
-            if (usados == capacidade) {
-                capacidade *= 2;
-                ids = realloc(ids, capacidade * sizeof(int));
-            }
-            ids[usados++] = -1; // token desconhecido
-            i++;
-        }
-    }
+        if (count == 0) continue;
 
-    *n_ids = usados;
-    return ids;
+        // Alocar nova linha
+        char *nova = malloc(tam_orig + 1);
+        if (!nova) return -1;
+
+        char *p_orig = orig;
+        char *p_nova = nova;
+        char *next;
+
+        while (*p_orig) {
+            next = strstr(p_orig, par);
+            if (!next) {
+                strcpy(p_nova, p_orig);
+                break;
+            }
+            int antes = next - p_orig;
+            strncpy(p_nova, p_orig, antes);
+            p_nova += antes;
+            strcpy(p_nova, par);
+            p_nova += 2;
+            p_orig = next + 2;
+            fusoes++;
+        }
+
+        free(m_texto->linhas[i]);
+        m_texto->linhas[i] = nova;
+    }
+    return fusoes;
 }
+
+// ----------------------------------------------------
+// R1.6 - Calcular o alfabeto final (loop principal BPE)
+// ----------------------------------------------------
+int calcularAlfabetoTokens(MatrizTexto *texto_corpus,
+                           MatrizTokens *alfabeto_tokens,
+                           int num_tokens_desejado) {
+
+    if (!inicializarTokensUnicos(*texto_corpus, alfabeto_tokens))
+        return 0;
+
+    while (alfabeto_tokens->usados < num_tokens_desejado) {
+        int freq;
+        char *par = encontrarParMaisFrequente(*texto_corpus, *alfabeto_tokens, &freq);
+
+        if (!par || freq <= 1) {
+            free(par);
+            break;
+        }
+
+        if (!adicionarToken(alfabeto_tokens, par)) {
+            free(par);
+            return 0;
+        }
+
+        if (aplicarFusaoNoCorpus(texto_corpus, &par[0], &par[1]) == -1) {
+            free(par);
+            return 0;
+        }
+
+        free(par);
+    }
+
+    return 1;
+}
+
 
 
 
