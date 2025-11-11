@@ -5,9 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-// =============================================================
-//  Estruturas
-// =============================================================
 typedef struct {
     char **linhas;
     int linhas_usadas;
@@ -20,9 +17,6 @@ typedef struct {
     int capacidade;
 } MatrizTokens;
 
-// =============================================================
-//  Manipulação de MatrizTexto
-// =============================================================
 MatrizTexto criarMatrizTexto(int capacidade_inicial);
 int redimensionarMatriz(MatrizTexto *m, int nova_capacidade);
 int adicionarLinha(MatrizTexto *m, const char *frase);
@@ -32,14 +26,26 @@ void pesquisarTexto(MatrizTexto m, const char *palavra);
 int removerLinha(MatrizTexto *m, int indice);
 int removerLinhaPorConteudo(MatrizTexto *m, const char *frase);
 
-// =============================================================
-//  Manipulação de MatrizTokens
-// =============================================================
 MatrizTokens criarMatrizTokens(int capacidade_inicial);
 int adicionarToken(MatrizTokens *t, const char *token);
 void listarTokens(MatrizTokens t);
 int removerToken(MatrizTokens *t, int indice);
 int removerTokenPorConteudo(MatrizTokens *t, const char *token);
 void libertarTokens(MatrizTokens t);
+
+// Funções do R1.3 (BPE)
+int inicializarTokensUnicos(MatrizTexto m_texto, MatrizTokens *m_tokens);
+char *encontrarParMaisFrequente(MatrizTexto m_texto, MatrizTokens m_tokens, int *freq_max);
+int aplicarFusaoNoCorpus(MatrizTexto *m_texto, const char *token1, const char *token2);
+int calcularAlfabetoTokens(MatrizTexto *texto_corpus,
+                           MatrizTokens *alfabeto_tokens,
+                           int num_tokens_desejado);
+
+int* calcularFrequenciaTokens(MatrizTexto m_texto,
+                              MatrizTokens m_tokens,
+                              int *num_frequencias_out);
+
+// Nota: A função 'tokenizarFrase' do R1.4 também deve ser adicionada aqui
+// para futuras implementações, mas não foi solicitada para esta lista.
 
 #endif

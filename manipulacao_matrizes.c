@@ -174,3 +174,228 @@ void libertarTokens(MatrizTokens t) {
     }
     free(t.tokens);
 }
+
+int adicionarToken(MatrizTokens *m, const char *novo_token) {
+    if (m->usados >= MAX_TOKENS)
+        return 0;
+    m->tokens[m->usados] = strdup(novo_token);
+    if (m->tokens[m->usados] == NULL)
+        return 0;
+    m->usados++;
+    return 1;
+}
+
+// ----------------------------------------------------
+// R1.3 - Inicializar tokens únicos (alfabeto base)
+// ----------------------------------------------------
+int inicializarTokensUnicos(MatrizTexto m_texto, MatrizTokens *m_tokens) {
+    unsigned char vistos[256] = {0};
+    char token[2];
+
+    for (int i = 0; i < m_texto.linhas_usadas; i++) {
+        char *linha = m_texto.linhas[i];
+        for (int j = 0; linha[j] != '\0'; j++) {
+            unsigned char c = (unsigned char)linha[j];
+            if (!vistos[c]) {
+                vistos[c] = 1;
+                token[0] = linha[j];
+                token[1] = '\0';
+                if (!adicionarToken(m_tokens, token))
+                    return 0;
+            }
+        }
+    }
+    return 1;
+}
+
+// ----------------------------------------------------
+// R1.4 - Encontrar o par mais frequente no corpus
+// ----------------------------------------------------
+char *encontrarParMaisFrequente(MatrizTexto m_texto, MatrizTokens m_tokens, int *freq_max) {
+    int max_frequencia = 0;
+    char *melhor_par = NULL;
+    char temp[3];
+
+    if (m_tokens.usados < 2) {
+        *freq_max = 0;
+        return NULL;
+    }
+
+    for (int i = 0; i < m_tokens.usados; i++) {
+        char *t1 = m_tokens.tokens[i];
+        if (strlen(t1) > 1) continue;
+
+        for (int j = 0; j < m_tokens.usados; j++) {
+            char *t2 = m_tokens.tokens[j];
+            if (strlen(t2) > 1) continue;
+
+            temp[0] = t1[0];
+            temp[1] = t2[0];
+            temp[2] = '\0';
+
+            int freq_atual = 0;
+
+            for (int k = 0; k < m_texto.linhas_usadas; k++) {
+                char *linha = m_texto.linhas[k];
+                char *ptr = linha;
+                while ((ptr = strstr(ptr, temp)) != NULL) {
+                    freq_atual++;
+                    ptr += 2;
+                }
+            }
+
+            if (freq_atual > max_frequencia) {
+                max_frequencia = freq_atual;
+                free(melhor_par);
+                melhor_par = strdup(temp);
+                if (!melhor_par) return NULL;
+            }
+        }
+    }
+
+    *freq_max = max_frequencia;
+    return melhor_par;
+}
+
+// ----------------------------------------------------
+// R1.5 - Aplicar fusão no corpus
+// ----------------------------------------------------
+int aplicarFusaoNoCorpus(MatrizTexto *m_texto, const char *token1, const char *token2) {
+    int fusoes = 0;
+    char par[3] = {token1[0], token2[0], '\0'};
+
+    for (int i = 0; i < m_texto->linhas_usadas; i++) {
+        char *orig = m_texto->linhas[i];
+        int tam_orig = strlen(orig);
+
+        // Contar ocorrências do par
+        int count = 0;
+        char *ptr = orig;
+        while ((ptr = strstr(ptr, par)) != NULL) {
+            count++;
+            ptr += 2;
+        }
+
+        if (count == 0) continue;
+
+        // Alocar nova linha
+        char *nova = malloc(tam_orig + 1);
+        if (!nova) return -1;
+
+        char *p_orig = orig;
+        char *p_nova = nova;
+        char *next;
+
+        while (*p_orig) {
+            next = strstr(p_orig, par);
+            if (!next) {
+                strcpy(p_nova, p_orig);
+                break;
+            }
+            int antes = next - p_orig;
+            strncpy(p_nova, p_orig, antes);
+            p_nova += antes;
+            strcpy(p_nova, par);
+            p_nova += 2;
+            p_orig = next + 2;
+            fusoes++;
+        }
+
+        free(m_texto->linhas[i]);
+        m_texto->linhas[i] = nova;
+    }
+    return fusoes;
+}
+
+// ----------------------------------------------------
+// R1.6 - Calcular o alfabeto final (loop principal BPE)
+// ----------------------------------------------------
+int calcularAlfabetoTokens(MatrizTexto *texto_corpus,
+                           MatrizTokens *alfabeto_tokens,
+                           int num_tokens_desejado) {
+
+    if (!inicializarTokensUnicos(*texto_corpus, alfabeto_tokens))
+        return 0;
+
+    while (alfabeto_tokens->usados < num_tokens_desejado) {
+        int freq;
+        char *par = encontrarParMaisFrequente(*texto_corpus, *alfabeto_tokens, &freq);
+
+        if (!par || freq <= 1) {
+            free(par);
+            break;
+        }
+
+        if (!adicionarToken(alfabeto_tokens, par)) {
+            free(par);
+            return 0;
+        }
+
+        if (aplicarFusaoNoCorpus(texto_corpus, &par[0], &par[1]) == -1) {
+            free(par);
+            return 0;
+        }
+
+        free(par);
+    }
+
+    return 1;
+}
+
+// =============================================================
+//  Requisito 1.5: Cálculo da Frequência de Tokens
+// =============================================================
+
+/**
+ * @brief Calcula a frequência de cada token presente na MatrizTokens, contando
+ * as suas ocorrências no MatrizTexto (corpus modificado).
+ * @param m_texto MatrizTexto contendo o corpus (já com as fusoes aplicadas).
+ * @param m_tokens MatrizTokens contendo o alfabeto final.
+ * @param num_frequencias_out Ponteiro para guardar o numero total de frequencias (igual a m_tokens.usados).
+ * @return int* Retorna um array de inteiros alocado dinamicamente com as frequencias, ou NULL em caso de erro.
+ */
+int* calcularFrequenciaTokens(MatrizTexto m_texto,
+                              MatrizTokens m_tokens,
+                              int *num_frequencias_out) {
+
+    // 1. Alocar o array de frequências
+    int *frequencias = (int*) calloc(m_tokens.usados, sizeof(int));
+    if (frequencias == NULL) {
+        printf("Erro: Falha na alocacao de memoria para o array de frequencias.\n");
+        *num_frequencias_out = 0;
+        return NULL;
+    }
+
+    printf("\n⚙  A calcular a frequencia de %d tokens...\n", m_tokens.usados);
+
+    // 2. Iterar por cada token no alfabeto
+    for (int t_idx = 0; t_idx < m_tokens.usados; t_idx++) {
+        const char *token_atual = m_tokens.tokens[t_idx];
+        int tamanho_token = strlen(token_atual);
+        int freq_atual = 0;
+
+        // 3. Iterar por cada linha do corpus
+        for (int l_idx = 0; l_idx < m_texto.linhas_usadas; l_idx++) {
+            char *linha = m_texto.linhas[l_idx];
+            char *ptr = linha;
+
+            // 4. Usar strstr para encontrar todas as ocorrências do token na linha
+            // Nota: Esta abordagem é simples mas sensível a sobreposições,
+            // no BPE real é mais seguro contar IDs, mas funciona para strings.
+            while ((ptr = strstr(ptr, token_atual)) != NULL) {
+                freq_atual++;
+                // Avança o ponteiro pelo tamanho do token para evitar contagem sobreposta
+                // Ex: em "banana", o token "ana" so deve ser contado uma vez.
+                ptr += tamanho_token;
+            }
+        }
+
+        // 5. Guardar a frequência no array alocado
+        frequencias[t_idx] = freq_atual;
+    }
+
+    *num_frequencias_out = m_tokens.usados;
+    printf("Calculo de frequencias concluido. Total de %d frequencias.\n", *num_frequencias_out);
+
+    return frequencias;
+}
