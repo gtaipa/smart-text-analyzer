@@ -17,6 +17,10 @@ typedef struct {
     int capacidade;
 } MatrizTokens;
 
+// =============================================================
+//  Funcoes R1.1 e R1.2
+// =============================================================
+
 MatrizTexto criarMatrizTexto(int capacidade_inicial);
 int redimensionarMatriz(MatrizTexto *m, int nova_capacidade);
 int adicionarLinha(MatrizTexto *m, const char *frase);
@@ -33,19 +37,39 @@ int removerToken(MatrizTokens *t, int indice);
 int removerTokenPorConteudo(MatrizTokens *t, const char *token);
 void libertarTokens(MatrizTokens t);
 
-// Funções do R1.3 (BPE)
+// =============================================================
+//  Funcoes R1.3 (BPE)
+// =============================================================
+
 int inicializarTokensUnicos(MatrizTexto m_texto, MatrizTokens *m_tokens);
-char *encontrarParMaisFrequente(MatrizTexto m_texto, MatrizTokens m_tokens, int *freq_max);
-int aplicarFusaoNoCorpus(MatrizTexto *m_texto, const char *token1, const char *token2);
+
+int encontrarParMaisFrequente(MatrizTexto m_texto,
+                              MatrizTokens m_tokens,
+                              int *freq_max_out,
+                              char **t1_out,
+                              char **t2_out);
+
+int aplicarFusaoNoCorpus(MatrizTexto *m_texto,
+                         const char *token1,
+                         const char *token2,
+                         const char *token_fundido);
+
 int calcularAlfabetoTokens(MatrizTexto *texto_corpus,
                            MatrizTokens *alfabeto_tokens,
                            int num_tokens_desejado);
 
+// =============================================================
+//  Funcoes R1.4 (ADICIONA ESTA LINHA)
+// =============================================================
+int* tokenizarFrase(const char *frase, MatrizTokens tokens, int *n_ids);
+
+// =============================================================
+//  Funcoes R1.5
+// =============================================================
 int* calcularFrequenciaTokens(MatrizTexto m_texto,
                               MatrizTokens m_tokens,
                               int *num_frequencias_out);
 
-// Nota: A função 'tokenizarFrase' do R1.4 também deve ser adicionada aqui
-// para futuras implementações, mas não foi solicitada para esta lista.
+int* calcularTfParaFrase(int *ids_frase, int num_ids_frase, int tamanho_vocabulario);
 
 #endif
