@@ -1,7 +1,8 @@
 # ninja log v6
-4	90	7842561230636253	CMakeFiles/ProgetoAEDLP1.dir/main.c.obj	31f053cffac48bf
-91	176	7842561231500251	ProgetoAEDLP1.exe	d70fd7d7460d455f
-36	486	7842576087053445	build.ninja	6aa476a86bbc7667
-3	82	7842582582147141	CMakeFiles/ProgetoAEDLP1.dir/main.c.obj	31f053cffac48bf
-8	91	7842582582196768	CMakeFiles/ProgetoAEDLP1.dir/manipulacao_matrizes.c.obj	9485ecabcabfe75
-91	180	7842582583025152	ProgetoAEDLP1.exe	42ea3c765009a97a
+6	243	7846683261780630	CMakeFiles/ProgetoAEDLP1.dir/main.c.obj	31f053cffac48bf
+18	317	7846683261909977	CMakeFiles/ProgetoAEDLP1.dir/manipulacao_matrizes.c.obj	9485ecabcabfe75
+317	702	7846683264884009	ProgetoAEDLP1.exe	42ea3c765009a97a
+62	272	7846683645951327	CMakeFiles/ProgetoAEDLP1.dir/main.c.obj	31f053cffac48bf
+273	498	7846683648058416	ProgetoAEDLP1.exe	42ea3c765009a97a
+53	308	7846684348157199	CMakeFiles/ProgetoAEDLP1.dir/main.c.obj	31f053cffac48bf
+309	537	7846684350712060	ProgetoAEDLP1.exe	42ea3c765009a97a

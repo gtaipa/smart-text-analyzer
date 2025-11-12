@@ -128,14 +128,84 @@ void testar_R1_4() {
 
     printf("=== Teste R1.4 Concluido ===\n");
 }
+void testar_R1_5() {
+    printf("\n=== Teste R1.5: Vetorizacao TF (Term Frequency) ===\n");
+
+    // --- Setup (igual ao teste R1.4) ---
+    MatrizTokens tokens_teste = criarMatrizTokens(7);
+    adicionarToken(&tokens_teste, "b");   // ID 0
+    adicionarToken(&tokens_teste, "a");   // ID 1
+    adicionarToken(&tokens_teste, "r");   // ID 2
+    adicionarToken(&tokens_teste, " ");  // ID 3
+    adicionarToken(&tokens_teste, "p");   // ID 4
+    adicionarToken(&tokens_teste, "ar");  // ID 5
+    adicionarToken(&tokens_teste, "bar"); // ID 6
+
+    const char *frase_teste = "bar par";
+    int num_ids_frase = 0;
+    int *ids_da_frase = tokenizarFrase(frase_teste, tokens_teste, &num_ids_frase);
+
+    if (ids_da_frase == NULL) {
+        printf("Erro: Falhou o setup (R1.4). A cancelar teste R1.5.\n");
+        libertarTokens(tokens_teste);
+        return;
+    }
+    printf("[1] Setup (R1.4) concluido. IDs da frase: [6, 3, 4, 5]\n");
+    // --- Fim do Setup ---
+
+
+    // [2] Chamar a funcao a ser testada (R1.5)
+    printf("[2] A chamar calcularTfParaFrase...\n");
+    int tamanho_vocabulario = tokens_teste.usados; // = 7
+    int *vetor_tf = calcularTfParaFrase(ids_da_frase, num_ids_frase, tamanho_vocabulario);
+
+    // [3] Imprimir e validar o resultado
+    printf("[3] Resultado (Vetor TF no formato 'ID:Frequencia'):\n");
+    if (vetor_tf != NULL) {
+        // Imprimir no formato "sparse" (so os que contam)
+        // para ser igual ao exemplo do PDF
+        printf("    Resultado Esperado: (6:1, 3:1, 4:1, 5:1)\n");
+        printf("    Resultado Obtido:   ");
+        int count_validos = 0;
+        for (int i = 0; i < tamanho_vocabulario; i++) {
+            if (vetor_tf[i] > 0) {
+                printf("(%d:%d)", i, vetor_tf[i]);
+                count_validos++;
+                if (count_validos < num_ids_frase) {
+                     printf(", ");
+                }
+            }
+        }
+        printf("\n");
+
+        // Validacao
+        if (vetor_tf[6] == 1 && vetor_tf[3] == 1 && vetor_tf[4] == 1 && vetor_tf[5] == 1) {
+            printf("    Estado: SUCESSO!\n");
+        } else {
+            printf("    Estado: FALHOU!\n");
+        }
+
+    } else {
+        printf("    Erro: Funcao retornou NULL.\n");
+    }
+
+    // [4] Libertar memoria
+    printf("[4] A libertar memoria do teste...\n");
+    free(ids_da_frase);
+    free(vetor_tf);
+    libertarTokens(tokens_teste);
+
+    printf("=== Teste R1.5 Concluido ===\n");
+}
 
 
 int main() {
     printf("=== INICIO DOS TESTES DO PROJETO ===\n");
 
-    testar_R1_1_e_R1_2();
-    testar_R1_3();
+    //testar_R1_1_e_R1_2();
+    //testar_R1_3();
     testar_R1_4();
+    testar_R1_5();
 
     printf("\n=== FIM DE TODOS OS TESTES ===\n");
     return 0;
