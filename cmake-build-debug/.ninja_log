@@ -1,8 +1,10 @@
 # ninja log v6
-6	243	7846683261780630	CMakeFiles/ProgetoAEDLP1.dir/main.c.obj	31f053cffac48bf
-18	317	7846683261909977	CMakeFiles/ProgetoAEDLP1.dir/manipulacao_matrizes.c.obj	9485ecabcabfe75
-317	702	7846683264884009	ProgetoAEDLP1.exe	42ea3c765009a97a
-62	272	7846683645951327	CMakeFiles/ProgetoAEDLP1.dir/main.c.obj	31f053cffac48bf
-273	498	7846683648058416	ProgetoAEDLP1.exe	42ea3c765009a97a
-53	308	7846684348157199	CMakeFiles/ProgetoAEDLP1.dir/main.c.obj	31f053cffac48bf
-309	537	7846684350712060	ProgetoAEDLP1.exe	42ea3c765009a97a
+44	276	7848644917546341	CMakeFiles/ProgetoAEDLP1.dir/main.c.obj	31f053cffac48bf
+44	279	7848646103645560	CMakeFiles/ProgetoAEDLP1.dir/manipulacao_matrizes.c.obj	9485ecabcabfe75
+280	459	7848646106010335	ProgetoAEDLP1.exe	42ea3c765009a97a
+36	231	7848661804291350	CMakeFiles/ProgetoAEDLP1.dir/vetorizacao.c.obj	c58f9da92217dd1e
+27	239	7848661804195894	CMakeFiles/ProgetoAEDLP1.dir/bpe.c.obj	c0e2e43fc5e2f4f
+46	241	7848661804384150	CMakeFiles/ProgetoAEDLP1.dir/cal_similaridade.c.obj	f393b4e1e00a625a
+19	247	7848661804116301	CMakeFiles/ProgetoAEDLP1.dir/manipulacao_matrizes.c.obj	9485ecabcabfe75
+10	258	7848661804028239	CMakeFiles/ProgetoAEDLP1.dir/main.c.obj	31f053cffac48bf
+259	473	7848661806512909	ProgetoAEDLP1.exe	2d6bade81f085488

@@ -1,5 +1,10 @@
-#include "manipulacao_matrizes.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include "manipulacao_matrizes.h"
+#include "bpe.h"
+#include "vetorizacao.h"
+#include "cal_similaridade.h"
+
 
 void testar_R1_1_e_R1_2() {
     printf("=== Testes R1.1 e R1.2: Manipulacao de Matrizes ===\n");
@@ -197,15 +202,75 @@ void testar_R1_5() {
 
     printf("=== Teste R1.5 Concluido ===\n");
 }
+void testar_R1_6() {
+    printf("\n=== Teste R1.6: Calculo de Similaridade ===\n");
+    MatrizTokens tokens = criarMatrizTokens(8);
+
+    // --- ISTO É O QUE FALTAVA ---
+    // Precisamos de adicionar os "blocos de construção"
+    // A ordem aqui define os IDs (0, 1, 2, ...)
+    printf("[1] A popular o vocabulario de teste...\n");
+    adicionarToken(&tokens, "the");    // ID 0
+    adicionarToken(&tokens, "a");      // ID 1
+    adicionarToken(&tokens, " ");      // ID 2 (CRUCIAL! O espaço é um token)
+    adicionarToken(&tokens, "cat");    // ID 3
+    adicionarToken(&tokens, "dog");    // ID 4
+    adicionarToken(&tokens, "sleeps"); // ID 5
+    adicionarToken(&tokens, "runs");   // ID 6
+    adicionarToken(&tokens, "eats");   // ID 7
+    // --- FIM DA PARTE QUE FALTA ---
+    int vocab_size = tokens.usados;
+
+    // 2. Definir as frases do exemplo
+    const char* s1_str = "the cat sleeps";
+    const char* s2_str = "the dog runs";
+    const char* s3_str = "a cat eats";
+    const char* sin_str = "the cat eats";
+
+    // 3. Tokenizar e Vetorizar (TF) cada frase
+    int n_ids;
+    int* ids_s1 = tokenizarFrase(s1_str, tokens, &n_ids);
+    int* tf_s1 = calcularTfParaFrase(ids_s1, n_ids, vocab_size); // Vetor A
+
+    int* ids_s2 = tokenizarFrase(s2_str, tokens, &n_ids);
+    int* tf_s2 = calcularTfParaFrase(ids_s2, n_ids, vocab_size);
+
+    int* ids_s3 = tokenizarFrase(s3_str, tokens, &n_ids);
+    int* tf_s3 = calcularTfParaFrase(ids_s3, n_ids, vocab_size);
+
+    int* ids_sin = tokenizarFrase(sin_str, tokens, &n_ids);
+    int* tf_sin = calcularTfParaFrase(ids_sin, n_ids, vocab_size); // Vetor B
+
+    // 4. Calcular e Imprimir Similaridades (comparar Sin com S1, S2, S3)
+    printf("Comparando Sin (\"%s\") com:\n", sin_str);
+
+    double sim_s1 = calcularSimilaridadeCosseno(tf_sin, tf_s1, vocab_size);
+    printf("  S1 (\"%s\"): %.2f (Esperado: ~0.86)\n", s1_str, sim_s1);
+
+    double sim_s2 = calcularSimilaridadeCosseno(tf_sin, tf_s2, vocab_size);
+    printf("  S2 (\"%s\"): %.2f (Esperado: ~0.71)\n", s2_str, sim_s2);
+
+    double sim_s3 = calcularSimilaridadeCosseno(tf_sin, tf_s3, vocab_size);
+    printf("  S3 (\"%s\"): %.2f (Esperado: ~0.86)\n", s3_str, sim_s3);
+
+    // 5. Libertar memoria
+    free(ids_s1); free(tf_s1);
+    free(ids_s2); free(tf_s2);
+    free(ids_s3); free(tf_s3);
+    free(ids_sin); free(tf_sin);
+    libertarTokens(tokens);
+
+    printf("=== Teste R1.6 Concluido ===\n");
+}
 
 
 int main() {
     printf("=== INICIO DOS TESTES DO PROJETO ===\n");
-
-    //testar_R1_1_e_R1_2();
-    //testar_R1_3();
+    testar_R1_1_e_R1_2();
+    testar_R1_3();
     testar_R1_4();
     testar_R1_5();
+    testar_R1_6();
 
     printf("\n=== FIM DE TODOS OS TESTES ===\n");
     return 0;
