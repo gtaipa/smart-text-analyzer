@@ -1,55 +1,72 @@
-//
-// Created by guilh on 16/11/2025.
-//
 #ifndef GESTAO_DOCUMENTOS_H
 #define GESTAO_DOCUMENTOS_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "manipulacao_matrizes.h"
 #include "vetorizacao.h"
 
 // =============================================================
-//  R2.2: A "Caixa" (t_doc)
-// =============================================================
-typedef struct t_doc {
-    char *titulo;
-    char *texto_original;
-
-    int *ids_tokens;        // Resultado R1.4
-    int num_ids;
-    int *vetor_tf;          // Resultado R1.5
-    int vocab_size;
-
-    struct t_doc *proximo;  // "Fio" para a próxima caixa
-} t_doc;
-
-
-// =============================================================
-//  R2.1: A "Prateleira" (t_lista_docs)
+//  R2.2: Estrutura MATRIX_INT (Matriz Dinâmica de Inteiros)
 // =============================================================
 typedef struct {
-    t_doc *inicio;              // Ponteiro para a primeira caixa
-    int num_documentos;
-    MatrizTokens *vocabulario;  // O Alfabeto (essencial para os cálculos)
-} t_lista_docs;
-
+    int **linhas;       // Array de arrays de ints
+    int *tamanho_linhas;// Array que guarda o tamanho de cada linha
+    int linhas_usadas;
+    int capacidade;
+} MATRIX_INT;
 
 // =============================================================
-//  Funções R2.1 e R2.2
+//  R2.1: Estruturas da Lista Ligada (LL_TK_TF)
 // =============================================================
+typedef struct tk_tf_node {
+    int *ids;           // Vetor de IDs da frase (R1.4)
+    int tam_ids;        // Tamanho do vetor de IDs
 
-// Cria a Prateleira
-t_lista_docs criarListaDocumentos(MatrizTokens *vocab);
+    int *tf;            // Vetor TF da frase (R1.5)
+    int tam_vocab;      // Tamanho do vetor TF (vocabulario)
 
-// Fabrica uma Caixa, faz os cálculos, e arruma na Prateleira
-int adicionarDocumentoLista(t_lista_docs *lista, const char *titulo, const char *texto_original);
+    struct tk_tf_node *proximo;
+    struct tk_tf_node *anterior;
+} TK_TF_NODE;
 
-// Mostra o que está na Prateleira
-void listarDocumentos(t_lista_docs lista);
+typedef struct {
+    TK_TF_NODE *cabeca;
+    TK_TF_NODE *cauda;
+    int quantidade_nos;
+} LL_TK_TF;
 
-// Destrói a Prateleira e as Caixas
-void libertarListaDocumentos(t_lista_docs *lista);
+// =============================================================
+//  R2.2: Estrutura DOC (Agregador Principal)
+// =============================================================
+typedef struct {
+    MatrizTexto texto;          // As frases originais (Strings)
+    MATRIX_INT ids_tokenizados; // As frases em IDs (Ints)
+    LL_TK_TF lista_processada;  // As frases em Nós (Lista Ligada com TF)
 
-#endif //GESTAO_DOCUMENTOS_H
+    MatrizTokens tokens;        // O vocabulário associado a este documento
+} DOC;
+
+// --- Funções de Gestão da MATRIX_INT ---
+MATRIX_INT criarMatrixInt(int capacidade_inicial);
+int adicionarLinhaInt(MATRIX_INT *m, int *vetor_ids, int num_ids);
+void libertarMatrixInt(MATRIX_INT m);
+void listarMatrixInt(MATRIX_INT m);
+
+// --- Funções de Gestão da Lista Ligada (R2.1) ---
+LL_TK_TF criarListaLigada();
+int adicionarNoLista(LL_TK_TF *lista, int *ids, int n_ids, int *tf, int n_vocab);
+void libertarListaLigada(LL_TK_TF *lista);
+void listarListaLigada(LL_TK_TF lista);
+
+// --- Funções do Documento (R2.2) ---
+DOC* criarDocumento();
+void libertarDocumento(DOC *doc);
+
+/**
+ * @brief Adiciona uma frase ao documento, preenchendo automaticamente:
+ * 1. MatrizTexto (Texto original)
+ * 2. MATRIX_INT (IDs tokenizados)
+ * 3. LL_TK_TF (Lista com IDs e TF)
+ */
+void adicionarFraseAoDocumento(DOC *doc, const char *frase);
+
+#endif // GESTAO_DOCUMENTOS_H
