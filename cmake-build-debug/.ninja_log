@@ -1,10 +1,14 @@
 # ninja log v6
-44	276	7848644917546341	CMakeFiles/ProgetoAEDLP1.dir/main.c.obj	31f053cffac48bf
-44	279	7848646103645560	CMakeFiles/ProgetoAEDLP1.dir/manipulacao_matrizes.c.obj	9485ecabcabfe75
-280	459	7848646106010335	ProgetoAEDLP1.exe	42ea3c765009a97a
+10	258	7848661804028239	CMakeFiles/ProgetoAEDLP1.dir/main.c.obj	31f053cffac48bf
+19	247	7848661804116301	CMakeFiles/ProgetoAEDLP1.dir/manipulacao_matrizes.c.obj	9485ecabcabfe75
+259	473	7848661806512909	ProgetoAEDLP1.exe	2d6bade81f085488
 36	231	7848661804291350	CMakeFiles/ProgetoAEDLP1.dir/vetorizacao.c.obj	c58f9da92217dd1e
 27	239	7848661804195894	CMakeFiles/ProgetoAEDLP1.dir/bpe.c.obj	c0e2e43fc5e2f4f
 46	241	7848661804384150	CMakeFiles/ProgetoAEDLP1.dir/cal_similaridade.c.obj	f393b4e1e00a625a
-19	247	7848661804116301	CMakeFiles/ProgetoAEDLP1.dir/manipulacao_matrizes.c.obj	9485ecabcabfe75
-10	258	7848661804028239	CMakeFiles/ProgetoAEDLP1.dir/main.c.obj	31f053cffac48bf
-259	473	7848661806512909	ProgetoAEDLP1.exe	2d6bade81f085488
+39	410	7850946200493191	CMakeFiles/ProgetoAEDLP1.dir/bpe.c.obj	c0e2e43fc5e2f4f
+61	412	7850946200708889	CMakeFiles/ProgetoAEDLP1.dir/cal_similaridade.c.obj	f393b4e1e00a625a
+49	416	7850946200595197	CMakeFiles/ProgetoAEDLP1.dir/vetorizacao.c.obj	c58f9da92217dd1e
+29	417	7850946200396550	CMakeFiles/ProgetoAEDLP1.dir/manipulacao_matrizes.c.obj	9485ecabcabfe75
+71	418	7850946200808889	CMakeFiles/ProgetoAEDLP1.dir/gestao_documentos.c.obj	bab1c1f7f0d5c460
+15	430	7850946200253189	CMakeFiles/ProgetoAEDLP1.dir/main.c.obj	31f053cffac48bf
+430	892	7850946204401048	ProgetoAEDLP1.exe	d980f40f4a76573d

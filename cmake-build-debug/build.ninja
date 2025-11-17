@@ -79,6 +79,12 @@ build CMakeFiles/ProgetoAEDLP1.dir/cal_similaridade.c.obj: C_COMPILER__ProgetoAE
   OBJECT_DIR = CMakeFiles\ProgetoAEDLP1.dir
   OBJECT_FILE_DIR = CMakeFiles\ProgetoAEDLP1.dir
 
+build CMakeFiles/ProgetoAEDLP1.dir/gestao_documentos.c.obj: C_COMPILER__ProgetoAEDLP1_unscanned_Debug C$:/Users/pedro/Desktop/ProgetoAEDLP1/gestao_documentos.c || cmake_object_order_depends_target_ProgetoAEDLP1
+  DEP_FILE = CMakeFiles\ProgetoAEDLP1.dir\gestao_documentos.c.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\ProgetoAEDLP1.dir
+  OBJECT_FILE_DIR = CMakeFiles\ProgetoAEDLP1.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target ProgetoAEDLP1
@@ -87,7 +93,7 @@ build CMakeFiles/ProgetoAEDLP1.dir/cal_similaridade.c.obj: C_COMPILER__ProgetoAE
 #############################################
 # Link the executable ProgetoAEDLP1.exe
 
-build ProgetoAEDLP1.exe: C_EXECUTABLE_LINKER__ProgetoAEDLP1_Debug CMakeFiles/ProgetoAEDLP1.dir/main.c.obj CMakeFiles/ProgetoAEDLP1.dir/manipulacao_matrizes.c.obj CMakeFiles/ProgetoAEDLP1.dir/bpe.c.obj CMakeFiles/ProgetoAEDLP1.dir/vetorizacao.c.obj CMakeFiles/ProgetoAEDLP1.dir/cal_similaridade.c.obj
+build ProgetoAEDLP1.exe: C_EXECUTABLE_LINKER__ProgetoAEDLP1_Debug CMakeFiles/ProgetoAEDLP1.dir/main.c.obj CMakeFiles/ProgetoAEDLP1.dir/manipulacao_matrizes.c.obj CMakeFiles/ProgetoAEDLP1.dir/bpe.c.obj CMakeFiles/ProgetoAEDLP1.dir/vetorizacao.c.obj CMakeFiles/ProgetoAEDLP1.dir/cal_similaridade.c.obj CMakeFiles/ProgetoAEDLP1.dir/gestao_documentos.c.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\ProgetoAEDLP1.dir

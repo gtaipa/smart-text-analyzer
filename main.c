@@ -4,6 +4,7 @@
 #include "bpe.h"
 #include "vetorizacao.h"
 #include "cal_similaridade.h"
+#include "gestao_documentos.h"
 
 
 void testar_R1_1_e_R1_2() {
@@ -263,6 +264,45 @@ void testar_R1_6() {
     printf("=== Teste R1.6 Concluido ===\n");
 }
 
+void testar_R2_1_Avancado() {
+    printf("\n=== Teste R2.1: Lista Ligada Avancada ===\n");
+
+    // 1. Setup do Vocabulario
+    MatrizTokens vocab = criarMatrizTokens(5);
+    adicionarToken(&vocab, "banana"); // ID 0
+    adicionarToken(&vocab, "apple");  // ID 1
+
+    t_lista_docs lista = criarListaDocumentos(&vocab);
+
+    // 2. Insercoes
+    printf("[1] A inserir documentos...\n");
+    adicionarDocumentoLista(&lista, "Doc1", "banana");
+    adicionarDocumentoLista(&lista, "Doc3", "apple");
+
+    // Teste Inserir no Meio (Indice 1)
+    inserirDocumentoNoIndice(&lista, "Doc2", "banana apple", 1);
+    listarDocumentos(lista);
+    // Esperado: Doc1, Doc2, Doc3
+
+    // 3. Obter Documento
+    t_doc *d = obterDocumentoPorIndice(lista, 1);
+    if(d) printf("[2] Doc no indice 1: %s (Esperado: Doc2)\n", d->titulo);
+
+    // 4. Pesquisa Inversa (Quais docs têm 'banana' ID 0?)
+    printf("[3] A pesquisar quem tem 'banana' (ID 0)...\n");
+    pesquisarDocumentosPorTokenID(lista, 0);
+    // Esperado: Doc1 e Doc2
+
+    // 5. Remocao
+    printf("[4] A remover indice 1 (Doc2)...\n");
+    removerDocumentoPorIndice(&lista, 1);
+    listarDocumentos(lista);
+    // Esperado: Doc1, Doc3
+
+    libertarListaDocumentos(&lista);
+    libertarTokens(vocab);
+}
+
 
 int main() {
     printf("=== INICIO DOS TESTES DO PROJETO ===\n");
@@ -271,6 +311,7 @@ int main() {
     testar_R1_4();
     testar_R1_5();
     testar_R1_6();
+    testar_R2_1_Avancado();
 
     printf("\n=== FIM DE TODOS OS TESTES ===\n");
     return 0;
