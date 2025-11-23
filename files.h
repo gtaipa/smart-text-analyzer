@@ -32,4 +32,33 @@ int guardarColecaoTexto(const char *nome_ficheiro, t_lista_docs lista);
  */
 t_lista_docs carregarColecaoTexto(const char *nome_ficheiro);
 
+int guardarColecaoBinaria(const char *nome_ficheiro, t_lista_docs lista);
+t_lista_docs carregarColecaoBinaria(const char *nome_ficheiro);
+
+// ficheiro: files.h
+
+// ... (Incluções de cabeçalhos e declarações R2.3)
+
+// =============================================================
+//  Funções R2.4 - Ficheiros Binários
+// =============================================================
+
+/**
+ * @brief Guarda todo o estado (Vocabulario + Documentos + Dados TF/IDs)
+ * num ficheiro binário.
+ * @param nome_ficheiro Caminho para o ficheiro binário (ex: "colecao.bin").
+ * @param lista A lista de documentos.
+ * @return 1 se sucesso, 0 se erro.
+ */
+int guardarColecaoBinaria(const char *nome_ficheiro, t_lista_docs lista);
+
+/**
+ * @brief Carrega uma colecao a partir de um ficheiro binário.
+ * Recupera Vocabulario, Documentos, IDs e Vetores TF.
+ * @param nome_ficheiro Caminho para o ficheiro binário.
+ * @return Uma nova t_lista_docs preenchida.
+ */
+t_lista_docs carregarColecaoBinaria(const char *nome_ficheiro);
+
+
 #endif //FILES_H
