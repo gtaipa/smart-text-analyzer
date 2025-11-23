@@ -1,4 +1,5 @@
 #include "files.h"
+#include "string.h"
 
 // Remove o \n do final da string lida pelo fgets
 static void removerQuebraLinha(char *str) {
@@ -118,4 +119,161 @@ t_lista_docs carregarColecaoTexto(const char *nome_ficheiro) {
     printf("Colecao carregada: %d tokens e %d documentos.\n", 
            lista.vocabulario->usados, lista.num_documentos);
     return lista;
+
+
+
+
+
+
+    // ficheiro: files.c
+
+#include "files.h"
+    // ... (outros includes)
+
+    // =============================================================
+    //  Protótipos Privados (Auxiliares para R2.4)
+    // =============================================================
+
+    /**
+     * @brief Escreve uma string (tamanho + dados) num ficheiro binário.
+     */
+    static int escreverString(FILE *f, const char *str);
+
+    /**
+     * @brief Lê uma string (tamanho + dados) de um ficheiro binário e aloca memória.
+     */
+    static char* lerString(FILE *f);
+
+
+    // =============================================================
+    //  Funções R2.3 - Ficheiros de Texto (Implementações)
+    // =============================================================
+    // ... (Implementação de removerQuebraLinha, guardarColecaoTexto, carregarColecaoTexto)
+
+    // =============================================================
+    //  Funções R2.4 - Ficheiros Binários (Implementações)
+    // =============================================================
+    // ... (Implementação de escreverString, lerString, guardarColecaoBinaria, carregarColecaoBinaria)
+
+
+
+
+
+
+    // ficheiro: files.c
+
+int guardarColecaoBinaria(const char *nome_ficheiro, t_lista_docs lista); {
+    FILE *f = fopen(nome_ficheiro, "wb");
+    int sucesso = 1; // Variável de estado: 1 (Sucesso) ou 0 (Erro)
+
+    if (f == NULL) {
+        printf("Erro R2.4: Nao foi possivel criar o ficheiro binario '%s'.\n", nome_ficheiro);
+        return 0; // Retorna imediatamente em caso de erro ao abrir
+    }
+
+    // =============================================================
+    // 1. Guardar Vocabulário (MatrizTokens)
+    // =============================================================
+    int num_tokens = lista.vocabulario ? lista.vocabulario->usados : 0;
+
+    // Escreve o número de tokens
+    if (fwrite(&num_tokens, sizeof(int), 1, f) != 1) {
+        sucesso = 0;
+        goto fim;
+    }
+
+    // Escreve cada token (usando a função auxiliar para strings)
+    if (lista.vocabulario) {
+        for (int i = 0; i < num_tokens; i++) {
+            if (!escreverString(f, lista.vocabulario->tokens[i])) {
+                sucesso = 0;
+                goto fim;
+            }
+        }
+    }
+
+    // =============================================================
+    // 2. Guardar Documentos (Lista Ligada)
+    // =============================================================
+
+    // Escreve o número de documentos
+    int num_docs = lista.num_documentos;
+    if (fwrite(&num_docs, sizeof(int), 1, f) != 1) {
+        sucesso = 0;
+        goto fim;
+    }
+
+    t_doc *atual = lista.inicio;
+    while (atual != NULL) {
+        // 2.1. Título e Texto Original (Strings)
+        if (!escreverString(f, atual->titulo)) { sucesso = 0; goto fim; }
+        if (!escreverString(f, atual->texto_original)) { sucesso = 0; goto fim; }
+
+        // 2.2. IDs dos Tokens (Array de Inteiros)
+        int num_ids = atual->num_ids;
+        if (fwrite(&num_ids, sizeof(int), 1, f) != 1) { sucesso = 0; goto fim; }
+
+        // Escreve o array de IDs (apenas se houver IDs)
+        if (atual->ids_tokens && num_ids > 0) {
+            if (fwrite(atual->ids_tokens, sizeof(int), (size_t)num_ids, f) != (size_t)num_ids) {
+                sucesso = 0;
+                goto fim;
+            }
+        }
+
+        // 2.3. Vetor TF (Array de Inteiros)
+        int vocab_size = atual->vocab_size;
+        if (fwrite(&vocab_size, sizeof(int), 1, f) != 1) { sucesso = 0; goto fim; }
+
+        // Escreve o array TF (apenas se o vetor existir)
+        if (atual->vetor_tf && vocab_size > 0) {
+            if (fwrite(atual->vetor_tf, sizeof(int), (size_t)vocab_size, f) != (size_t)vocab_size) {
+                sucesso = 0;
+                goto fim;
+            }
+        }
+
+        atual = atual->proximo;
+    }
+
+// Este label 'fim' é o ponto de saída único.
+fim:
+    // Garante que o ficheiro é SEMPRE fechado, mesmo em caso de erro
+    fclose(f);
+
+    if (sucesso) {
+        printf("Sucesso R2.4: Colecao guardada em ficheiro binario: %s\n", nome_ficheiro);
+    } else {
+        printf("Erro R2.4: Falha na escrita binaria. O ficheiro pode estar incompleto.\n");
+    }
+
+    return sucesso; // Garante o retorno de um int em todos os caminhos.
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

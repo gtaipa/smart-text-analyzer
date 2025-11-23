@@ -4,6 +4,70 @@
 //  Funcoes Privadas (Auxiliares)
 // =============================================================
 
+// ficheiro: gestao_documentos.c
+
+#include "gestao_documentos.h"
+#include <string.h>  // Garantir a inclusao para strlen, memcpy
+
+// =============================================================
+//  Função de Compatibilidade para strdup (Resolve o erro do Linker)
+// =============================================================
+
+/**
+ * @brief Duplica uma string alocando memoria (compatível com POSIX strdup).
+ */
+char *compat_strdup(const char *s) {
+    if (s == NULL) return NULL;
+    // +1 para o terminador nulo '\0'
+    size_t len = strlen(s) + 1;
+
+    // Aloca a memória
+    char *new_str = (char*)malloc(len);
+
+    if (new_str == NULL) {
+        return NULL;
+    }
+
+    // Copia os dados (memcpy é mais eficiente que strcpy)
+    memcpy(new_str, s, len);
+
+    return new_str;
+}
+
+// =============================================================
+//  Funcoes Privadas (Auxiliares)
+// =============================================================
+// ... (O resto do seu ficheiro)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // (A tua funcao static original)
 static t_doc* priv_criarDocumentoNode(const char *titulo, const char *texto, MatrizTokens *vocab) {
     if (vocab == NULL || vocab->usados == 0) return NULL;
@@ -13,8 +77,8 @@ static t_doc* priv_criarDocumentoNode(const char *titulo, const char *texto, Mat
 
     int vocab_size = vocab->usados;
 
-    novo_doc->titulo = strdup(titulo);
-    novo_doc->texto_original = strdup(texto);
+    novo_doc->titulo = compat_strdup(titulo);
+    novo_doc->texto_original = compat_strdup(texto);
     novo_doc->vocab_size = vocab_size;
     novo_doc->proximo = NULL;
 
@@ -210,4 +274,5 @@ void pesquisarDocumentosPorTokenID(t_lista_docs lista, int token_id) {
     if (encontrados == 0) {
         printf("Nenhum documento contem este token.\n");
     }
+
 }
