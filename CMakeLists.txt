@@ -14,4 +14,6 @@ add_executable(ProgetoAEDLP1 main.c
         cal_similaridade.c
         gestao_documentos.c
         gestao_documentos.h
+        files.h
+        files.c
 )
