@@ -5,6 +5,7 @@
 #include "vetorizacao.h"
 #include "cal_similaridade.h"
 #include "gestao_documentos.h"
+#include "files.h"
 
 
 void testar_R1_1_e_R1_2() {
@@ -302,6 +303,54 @@ void testar_R2_1_Avancado() {
     libertarListaDocumentos(&lista);
     libertarTokens(vocab);
 }
+void testar_R2_3() {
+    printf("\n=== Teste R2.3: I/O com Ficheiros de Texto ===\n");
+
+    // 1. Criar dados em memoria
+    MatrizTokens vocab = criarMatrizTokens(5);
+    adicionarToken(&vocab, "ola");
+    adicionarToken(&vocab, "mundo");
+
+    t_lista_docs lista_orig = criarListaDocumentos(&vocab);
+    adicionarDocumentoLista(&lista_orig, "DocA", "ola mundo");
+    adicionarDocumentoLista(&lista_orig, "DocB", "mundo mundo");
+
+    // 2. Guardar em ficheiro
+    const char *ficheiro = "dados_projeto.txt";
+    guardarColecaoTexto(ficheiro, lista_orig);
+
+    // 3. Limpar memoria da lista original (simular fecho do programa)
+    // Nota: Numa implementacao real farias uma funcao para limpar a lista completa
+    // Aqui vamos apenas libertar a estrutura wrapper para o teste
+
+    // 4. Carregar do ficheiro para uma NOVA lista
+    printf("\nA carregar dados do ficheiro...\n");
+    t_lista_docs lista_nova = carregarColecaoTexto(ficheiro);
+
+    // 5. Validar
+    listarDocumentos(lista_nova);
+
+    // Verificar se o vocabulario veio correto
+    printf("Vocabulario carregado (%d tokens):\n", lista_nova.vocabulario->usados);
+    listarTokens(*lista_nova.vocabulario);
+
+    // Pequena validacao de vetorizacao
+    t_doc *d = lista_nova.inicio;
+    if(d && d->vetor_tf) {
+        printf("Validacao DocA TF: 'ola'(ID 0)=%d (Esperado: 1)\n", d->vetor_tf[0]);
+    }
+
+    // Limpeza final do teste
+    libertarTokens(vocab); // Original
+    // A lista_nova tem o seu proprio vocabulario alocado, precisa de limpeza propria
+    if (lista_nova.vocabulario) {
+        libertarTokens(*lista_nova.vocabulario);
+        free(lista_nova.vocabulario);
+    }
+    libertarListaDocumentos(&lista_nova);
+
+    printf("=== Teste R2.3 Concluido ===\n");
+}
 
 
 int main() {
@@ -312,6 +361,7 @@ int main() {
     testar_R1_5();
     testar_R1_6();
     testar_R2_1_Avancado();
+    testar_R2_3();
 
     printf("\n=== FIM DE TODOS OS TESTES ===\n");
     return 0;

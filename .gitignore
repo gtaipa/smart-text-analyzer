@@ -1,0 +1,15 @@
+# Ficheiros de configuração do IDE (CLion/JetBrains)
+.idea/
+
+# Ficheiros de compilação (Build)
+cmake-build-debug/
+cmake-build-release/
+
+# Executáveis e binários
+*.exe
+*.dll
+*.obj
+
+# Ficheiros temporários do sistema
+.DS_Store
+Thumbs.db
