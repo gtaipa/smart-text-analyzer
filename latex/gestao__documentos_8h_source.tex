@@ -1,0 +1,67 @@
+\doxysection{gestao\+\_\+documentos.\+h}
+\hypertarget{gestao__documentos_8h_source}{}\label{gestao__documentos_8h_source}\mbox{\hyperlink{gestao__documentos_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ GESTAO\_DOCUMENTOS\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ GESTAO\_DOCUMENTOS\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{manipulacao__matrizes_8h}{manipulacao\_matrizes.h}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{vetorizacao_8h}{vetorizacao.h}}"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ =============================================================}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ \ Estruturas\ de\ Dados\ (Mantidas\ do\ teu\ código)}}
+\DoxyCodeLine{00012\ \textcolor{comment}{//\ =============================================================}}
+\DoxyCodeLine{00013\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structt__doc}{t\_doc}}\ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{structt__doc_ae7d34065b07a95322eaa4f6a2f02cff8}{titulo}};}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{structt__doc_abf868d53c328e994df6b80f801ef43cc}{texto\_original}};}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{int}\ *\mbox{\hyperlink{structt__doc_a6b4d829769251e3b734b3b8f61b97b1a}{ids\_tokens}};\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Resultado\ R1.4}}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structt__doc_a588b60d1bdd72237b0de3f2ca3c8af49}{num\_ids}};}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{int}\ *\mbox{\hyperlink{structt__doc_ad2adec9e875aa0a12237db4fc14d0f0b}{vetor\_tf}};\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Resultado\ R1.5}}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structt__doc_a5e2e4dbaf6e263db55549e9d00dc4ca6}{vocab\_size}};}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structt__doc}{t\_doc}}\ *\mbox{\hyperlink{structt__doc_a51302e978820edb9dc472df220336622}{proximo}};\ \ \textcolor{comment}{//\ "{}Fio"{}\ para\ a\ próxima\ caixa}}
+\DoxyCodeLine{00023\ \}\ \mbox{\hyperlink{structt__doc}{t\_doc}};}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{structt__doc}{t\_doc}}\ *\mbox{\hyperlink{structt__lista__docs_a524e33178537b9fc8c6757f53382f4d3}{inicio}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Ponteiro\ para\ a\ primeira\ caixa}}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structt__lista__docs_a798b5cb1034e5066f17b48dac2232dc5}{num\_documentos}};}
+\DoxyCodeLine{00028\ \ \ \ \ \mbox{\hyperlink{struct_matriz_tokens}{MatrizTokens}}\ *\mbox{\hyperlink{structt__lista__docs_a868b0899e1ecbe3814de1db189d661b0}{vocabulario}};\ \ \textcolor{comment}{//\ O\ Alfabeto}}
+\DoxyCodeLine{00029\ \}\ \mbox{\hyperlink{structt__lista__docs}{t\_lista\_docs}};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{comment}{//\ =============================================================}}
+\DoxyCodeLine{00033\ \textcolor{comment}{//\ \ Funções\ R2.1\ e\ R2.2}}
+\DoxyCodeLine{00034\ \textcolor{comment}{//\ =============================================================}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{comment}{//\ Cria\ a\ Prateleira}}
+\DoxyCodeLine{00037\ \mbox{\hyperlink{structt__lista__docs}{t\_lista\_docs}}\ \mbox{\hyperlink{gestao__documentos_8h_a495bd28a19aab8355bfe95dc735aff45}{criarListaDocumentos}}(\mbox{\hyperlink{struct_matriz_tokens}{MatrizTokens}}\ *vocab);}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{comment}{//\ Adiciona\ no\ fim\ (já\ tens\ esta)}}
+\DoxyCodeLine{00040\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{gestao__documentos_8h_a0125cec3c2e9ca159acc390ac9e7caf8}{adicionarDocumentoLista}}(\mbox{\hyperlink{structt__lista__docs}{t\_lista\_docs}}\ *lista,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *titulo,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *texto\_original);}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{comment}{//\ Mostra\ o\ que\ está\ na\ Prateleira}}
+\DoxyCodeLine{00043\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{gestao__documentos_8h_ab4adcbe0cbb5a18f4a0d8310f0f04ed7}{listarDocumentos}}(\mbox{\hyperlink{structt__lista__docs}{t\_lista\_docs}}\ lista);}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{comment}{//\ Destrói\ a\ Prateleira}}
+\DoxyCodeLine{00046\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{gestao__documentos_8h_a5034885812e44f9965250d127f4f4001}{libertarListaDocumentos}}(\mbox{\hyperlink{structt__lista__docs}{t\_lista\_docs}}\ *lista);}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \textcolor{comment}{//\ -\/-\/-\/\ NOVAS\ FUNÇÕES\ (Para\ completar\ o\ R2.1)\ -\/-\/-\/}}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \textcolor{comment}{//\ Obter\ um\ documento\ numa\ posição\ especifica\ (apenas\ leitura)}}
+\DoxyCodeLine{00051\ \mbox{\hyperlink{structt__doc}{t\_doc}}*\ \mbox{\hyperlink{gestao__documentos_8h_a2ac44ce36e53e1bd2cb0b23aa648b9a6}{obterDocumentoPorIndice}}(\mbox{\hyperlink{structt__lista__docs}{t\_lista\_docs}}\ lista,\ \textcolor{keywordtype}{int}\ indice);}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{comment}{//\ Inserir\ um\ documento\ numa\ posição\ especifica\ (0\ =\ inicio)}}
+\DoxyCodeLine{00054\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{gestao__documentos_8h_a97ae65e3374a282a88b1bab9c0afe8b4}{inserirDocumentoNoIndice}}(\mbox{\hyperlink{structt__lista__docs}{t\_lista\_docs}}\ *lista,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *titulo,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *texto,\ \textcolor{keywordtype}{int}\ indice);}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{comment}{//\ Remover\ um\ documento\ numa\ posição\ especifica}}
+\DoxyCodeLine{00057\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{gestao__documentos_8h_a52dc5853b5dd334a8a84cc9896d087d1}{removerDocumentoPorIndice}}(\mbox{\hyperlink{structt__lista__docs}{t\_lista\_docs}}\ *lista,\ \textcolor{keywordtype}{int}\ indice);}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{comment}{//\ Pesquisar\ documentos\ que\ contêm\ um\ ID\ de\ token\ especifico}}
+\DoxyCodeLine{00060\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{gestao__documentos_8h_aea9a92b5d67b8e25d4a4cb1ca9bb0059}{pesquisarDocumentosPorTokenID}}(\mbox{\hyperlink{structt__lista__docs}{t\_lista\_docs}}\ lista,\ \textcolor{keywordtype}{int}\ token\_id);}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//GESTAO\_DOCUMENTOS\_H}}
+
+\end{DoxyCode}
