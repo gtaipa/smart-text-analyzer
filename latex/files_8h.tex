@@ -1,0 +1,99 @@
+\doxysection{files.\+h File Reference}
+\hypertarget{files_8h}{}\label{files_8h}\index{files.h@{files.h}}
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include "{}gestao\+\_\+documentos.\+h"{}}\newline
+{\ttfamily \#include "{}manipulacao\+\_\+matrizes.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{files_8h_ab1ee4f184362ee160cc796ca684bc5ca}{guardar\+Colecao\+Texto}} (const char \texorpdfstring{$\ast$}{*}nome\+\_\+ficheiro, \mbox{\hyperlink{structt__lista__docs}{t\+\_\+lista\+\_\+docs}} lista)
+\begin{DoxyCompactList}\small\item\em Guarda todo o estado (Vocabulario + Documentos + Dados TF) num ficheiro de texto. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structt__lista__docs}{t\+\_\+lista\+\_\+docs}} \mbox{\hyperlink{files_8h_a013496290ea665e64e703cae2843f438}{carregar\+Colecao\+Texto}} (const char \texorpdfstring{$\ast$}{*}nome\+\_\+ficheiro)
+\begin{DoxyCompactList}\small\item\em Carrega uma colecao a partir de um ficheiro de texto. Reconstrói o Vocabulario e recalcula IDs/\+TF baseados no texto lido. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{files_8h_a2e5438d36fb767b96f0f2b02964c88f1}{guardar\+Colecao\+Binaria}} (const char \texorpdfstring{$\ast$}{*}nome\+\_\+ficheiro, \mbox{\hyperlink{structt__lista__docs}{t\+\_\+lista\+\_\+docs}} lista)
+\begin{DoxyCompactList}\small\item\em Guarda todo o estado (Vocabulario + Documentos + Dados TF/\+IDs) num ficheiro binário. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structt__lista__docs}{t\+\_\+lista\+\_\+docs}} \mbox{\hyperlink{files_8h_a3bf22481b9e8bfcf1460109e1dc19559}{carregar\+Colecao\+Binaria}} (const char \texorpdfstring{$\ast$}{*}nome\+\_\+ficheiro)
+\begin{DoxyCompactList}\small\item\em Carrega uma colecao a partir de um ficheiro binário. Recupera Vocabulario, Documentos, IDs e Vetores TF. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{files_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{files_8h_a3bf22481b9e8bfcf1460109e1dc19559}\index{files.h@{files.h}!carregarColecaoBinaria@{carregarColecaoBinaria}}
+\index{carregarColecaoBinaria@{carregarColecaoBinaria}!files.h@{files.h}}
+\doxysubsubsection{\texorpdfstring{carregarColecaoBinaria()}{carregarColecaoBinaria()}}
+{\footnotesize\ttfamily \label{files_8h_a3bf22481b9e8bfcf1460109e1dc19559} 
+\mbox{\hyperlink{structt__lista__docs}{t\+\_\+lista\+\_\+docs}} carregar\+Colecao\+Binaria (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{nome\+\_\+ficheiro}{}\end{DoxyParamCaption})}
+
+
+
+Carrega uma colecao a partir de um ficheiro binário. Recupera Vocabulario, Documentos, IDs e Vetores TF. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nome\+\_\+ficheiro} & Caminho para o ficheiro binário. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Uma nova \doxylink{structt__lista__docs}{t\+\_\+lista\+\_\+docs} preenchida. 
+\end{DoxyReturn}
+\Hypertarget{files_8h_a013496290ea665e64e703cae2843f438}\index{files.h@{files.h}!carregarColecaoTexto@{carregarColecaoTexto}}
+\index{carregarColecaoTexto@{carregarColecaoTexto}!files.h@{files.h}}
+\doxysubsubsection{\texorpdfstring{carregarColecaoTexto()}{carregarColecaoTexto()}}
+{\footnotesize\ttfamily \label{files_8h_a013496290ea665e64e703cae2843f438} 
+\mbox{\hyperlink{structt__lista__docs}{t\+\_\+lista\+\_\+docs}} carregar\+Colecao\+Texto (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{nome\+\_\+ficheiro}{}\end{DoxyParamCaption})}
+
+
+
+Carrega uma colecao a partir de um ficheiro de texto. Reconstrói o Vocabulario e recalcula IDs/\+TF baseados no texto lido. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nome\+\_\+ficheiro} & Caminho para o ficheiro. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Uma nova \doxylink{structt__lista__docs}{t\+\_\+lista\+\_\+docs} preenchida. 
+\end{DoxyReturn}
+\Hypertarget{files_8h_a2e5438d36fb767b96f0f2b02964c88f1}\index{files.h@{files.h}!guardarColecaoBinaria@{guardarColecaoBinaria}}
+\index{guardarColecaoBinaria@{guardarColecaoBinaria}!files.h@{files.h}}
+\doxysubsubsection{\texorpdfstring{guardarColecaoBinaria()}{guardarColecaoBinaria()}}
+{\footnotesize\ttfamily \label{files_8h_a2e5438d36fb767b96f0f2b02964c88f1} 
+int guardar\+Colecao\+Binaria (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{nome\+\_\+ficheiro}{, }\item[{\mbox{\hyperlink{structt__lista__docs}{t\+\_\+lista\+\_\+docs}}}]{lista}{}\end{DoxyParamCaption})}
+
+
+
+Guarda todo o estado (Vocabulario + Documentos + Dados TF/\+IDs) num ficheiro binário. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nome\+\_\+ficheiro} & Caminho para o ficheiro binário (ex\+: "{}colecao.\+bin"{}). \\
+\hline
+{\em lista} & A lista de documentos. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 se sucesso, 0 se erro. 
+\end{DoxyReturn}
+\Hypertarget{files_8h_ab1ee4f184362ee160cc796ca684bc5ca}\index{files.h@{files.h}!guardarColecaoTexto@{guardarColecaoTexto}}
+\index{guardarColecaoTexto@{guardarColecaoTexto}!files.h@{files.h}}
+\doxysubsubsection{\texorpdfstring{guardarColecaoTexto()}{guardarColecaoTexto()}}
+{\footnotesize\ttfamily \label{files_8h_ab1ee4f184362ee160cc796ca684bc5ca} 
+int guardar\+Colecao\+Texto (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{nome\+\_\+ficheiro}{, }\item[{\mbox{\hyperlink{structt__lista__docs}{t\+\_\+lista\+\_\+docs}}}]{lista}{}\end{DoxyParamCaption})}
+
+
+
+Guarda todo o estado (Vocabulario + Documentos + Dados TF) num ficheiro de texto. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nome\+\_\+ficheiro} & Caminho para o ficheiro. \\
+\hline
+{\em lista} & A lista de documentos (que contem o vocabulario). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 se sucesso, 0 se erro. 
+\end{DoxyReturn}

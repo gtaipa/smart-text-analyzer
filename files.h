@@ -1,10 +1,5 @@
-//
-// Created by pedro on 23/11/2025.
-//
-
 #ifndef FILES_H
 #define FILES_H
-
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -17,48 +12,42 @@
 // =============================================================
 
 /**
- * @brief Guarda todo o estado (Vocabulario + Documentos + Dados TF) num ficheiro de texto.
- * @param nome_ficheiro Caminho para o ficheiro.
- * @param lista A lista de documentos (que contem o vocabulario).
- * @return 1 se sucesso, 0 se erro.
+ * @brief Guarda a coleção completa (Vocabulário e Documentos) num ficheiro de texto legível.
+ * Formato: Lista de tokens, seguida pela lista de documentos com os seus metadados.
+ * @param nome_ficheiro Caminho/Nome do ficheiro de destino.
+ * @param lista A estrutura contendo os dados a guardar.
+ * @return int 1 em caso de sucesso, 0 se houver erro de I/O.
  */
 int guardarColecaoTexto(const char *nome_ficheiro, t_lista_docs lista);
 
 /**
- * @brief Carrega uma colecao a partir de um ficheiro de texto.
- * Reconstrói o Vocabulario e recalcula IDs/TF baseados no texto lido.
- * @param nome_ficheiro Caminho para o ficheiro.
- * @return Uma nova t_lista_docs preenchida.
+ * @brief Carrega uma coleção a partir de um ficheiro de texto.
+ * Lê o vocabulário e os textos, e recria as estruturas dinâmicas em memória (incluindo recalcular IDs e TF).
+ * @param nome_ficheiro Caminho do ficheiro a ler.
+ * @return t_lista_docs Estrutura carregada (deve ser libertada posteriormente).
  */
 t_lista_docs carregarColecaoTexto(const char *nome_ficheiro);
 
-int guardarColecaoBinaria(const char *nome_ficheiro, t_lista_docs lista);
-t_lista_docs carregarColecaoBinaria(const char *nome_ficheiro);
-
-// ficheiro: files.h
-
-// ... (Incluções de cabeçalhos e declarações R2.3)
 
 // =============================================================
 //  Funções R2.4 - Ficheiros Binários
 // =============================================================
 
 /**
- * @brief Guarda todo o estado (Vocabulario + Documentos + Dados TF/IDs)
- * num ficheiro binário.
- * @param nome_ficheiro Caminho para o ficheiro binário (ex: "colecao.bin").
- * @param lista A lista de documentos.
- * @return 1 se sucesso, 0 se erro.
+ * @brief Guarda a coleção completa num ficheiro binário.
+ * Mais eficiente que texto: guarda a representação exata da memória (tamanhos seguidos de bytes).
+ * Inclui: Vocabulário, Textos, IDs de Tokens e Vetores TF.
+ * @param nome_ficheiro Caminho do ficheiro binário (.bin).
+ * @param lista A estrutura de dados a persistir.
+ * @return int 1 em caso de sucesso, 0 se erro.
  */
 int guardarColecaoBinaria(const char *nome_ficheiro, t_lista_docs lista);
 
 /**
- * @brief Carrega uma colecao a partir de um ficheiro binário.
- * Recupera Vocabulario, Documentos, IDs e Vetores TF.
- * @param nome_ficheiro Caminho para o ficheiro binário.
- * @return Uma nova t_lista_docs preenchida.
+ * @brief Lê uma coleção completa de um ficheiro binário.
+ * @param nome_ficheiro Caminho do ficheiro binário a ler.
+ * @return t_lista_docs Estrutura carregada em memória.
  */
 t_lista_docs carregarColecaoBinaria(const char *nome_ficheiro);
-
 
 #endif //FILES_H

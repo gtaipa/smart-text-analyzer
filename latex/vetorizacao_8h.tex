@@ -1,0 +1,39 @@
+\doxysection{vetorizacao.\+h File Reference}
+\hypertarget{vetorizacao_8h}{}\label{vetorizacao_8h}\index{vetorizacao.h@{vetorizacao.h}}
+{\ttfamily \#include "{}manipulacao\+\_\+matrizes.\+h"{}}\newline
+{\ttfamily \#include "{}bpe.\+h"{}}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{vetorizacao_8h_af7d589d2004da56d939a841c7a08572c}{tokenizar\+Frase}} (const char \texorpdfstring{$\ast$}{*}frase, \mbox{\hyperlink{struct_matriz_tokens}{Matriz\+Tokens}} tokens, int \texorpdfstring{$\ast$}{*}n\+\_\+ids)
+\item 
+int \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{vetorizacao_8h_a030d16d02db4971f0bd8387eed8922c9}{calcular\+Frequencia\+Tokens}} (\mbox{\hyperlink{struct_matriz_texto}{Matriz\+Texto}} m\+\_\+texto, \mbox{\hyperlink{struct_matriz_tokens}{Matriz\+Tokens}} m\+\_\+tokens, int \texorpdfstring{$\ast$}{*}num\+\_\+frequencias\+\_\+out)
+\item 
+int \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{vetorizacao_8h_aeb3cb8220283ad431926920d5b71b673}{calcular\+Tf\+Para\+Frase}} (int \texorpdfstring{$\ast$}{*}ids\+\_\+frase, int num\+\_\+ids\+\_\+frase, int tamanho\+\_\+vocabulario)
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{vetorizacao_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{vetorizacao_8h_a030d16d02db4971f0bd8387eed8922c9}\index{vetorizacao.h@{vetorizacao.h}!calcularFrequenciaTokens@{calcularFrequenciaTokens}}
+\index{calcularFrequenciaTokens@{calcularFrequenciaTokens}!vetorizacao.h@{vetorizacao.h}}
+\doxysubsubsection{\texorpdfstring{calcularFrequenciaTokens()}{calcularFrequenciaTokens()}}
+{\footnotesize\ttfamily \label{vetorizacao_8h_a030d16d02db4971f0bd8387eed8922c9} 
+int \texorpdfstring{$\ast$}{*} calcular\+Frequencia\+Tokens (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_matriz_texto}{Matriz\+Texto}}}]{m\+\_\+texto}{, }\item[{\mbox{\hyperlink{struct_matriz_tokens}{Matriz\+Tokens}}}]{m\+\_\+tokens}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{num\+\_\+frequencias\+\_\+out}{}\end{DoxyParamCaption})}
+
+\Hypertarget{vetorizacao_8h_aeb3cb8220283ad431926920d5b71b673}\index{vetorizacao.h@{vetorizacao.h}!calcularTfParaFrase@{calcularTfParaFrase}}
+\index{calcularTfParaFrase@{calcularTfParaFrase}!vetorizacao.h@{vetorizacao.h}}
+\doxysubsubsection{\texorpdfstring{calcularTfParaFrase()}{calcularTfParaFrase()}}
+{\footnotesize\ttfamily \label{vetorizacao_8h_aeb3cb8220283ad431926920d5b71b673} 
+int \texorpdfstring{$\ast$}{*} calcular\+Tf\+Para\+Frase (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{ids\+\_\+frase}{, }\item[{int}]{num\+\_\+ids\+\_\+frase}{, }\item[{int}]{tamanho\+\_\+vocabulario}{}\end{DoxyParamCaption})}
+
+\Hypertarget{vetorizacao_8h_af7d589d2004da56d939a841c7a08572c}\index{vetorizacao.h@{vetorizacao.h}!tokenizarFrase@{tokenizarFrase}}
+\index{tokenizarFrase@{tokenizarFrase}!vetorizacao.h@{vetorizacao.h}}
+\doxysubsubsection{\texorpdfstring{tokenizarFrase()}{tokenizarFrase()}}
+{\footnotesize\ttfamily \label{vetorizacao_8h_af7d589d2004da56d939a841c7a08572c} 
+int \texorpdfstring{$\ast$}{*} tokenizar\+Frase (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{frase}{, }\item[{\mbox{\hyperlink{struct_matriz_tokens}{Matriz\+Tokens}}}]{tokens}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{n\+\_\+ids}{}\end{DoxyParamCaption})}
+

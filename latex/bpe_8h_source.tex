@@ -1,0 +1,25 @@
+\doxysection{bpe.\+h}
+\hypertarget{bpe_8h_source}{}\label{bpe_8h_source}\mbox{\hyperlink{bpe_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ BPE\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ BPE\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{manipulacao__matrizes_8h}{manipulacao\_matrizes.h}}"{}}\ \textcolor{comment}{//\ Precisa\ das\ structs}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{comment}{//\ =============================================================}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ Funções\ R1.3\ (BPE)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ =============================================================}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{bpe_8h_a98291e6a586f9778ef597af6a3190917}{inicializarTokensUnicos}}(\mbox{\hyperlink{struct_matriz_texto}{MatrizTexto}}\ m\_texto,\ \mbox{\hyperlink{struct_matriz_tokens}{MatrizTokens}}\ *m\_tokens);}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{bpe_8h_a8a03f1357c26a89812fe8bc78b75bedb}{encontrarParMaisFrequente}}(\mbox{\hyperlink{struct_matriz_texto}{MatrizTexto}}\ m\_texto,\ \mbox{\hyperlink{struct_matriz_tokens}{MatrizTokens}}\ m\_tokens,\ \textcolor{keywordtype}{int}\ *freq\_max);}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{bpe_8h_a5022d836eb16ede1420537a767eb64d4}{aplicarFusaoNoCorpus}}(\mbox{\hyperlink{struct_matriz_texto}{MatrizTexto}}\ *m\_texto,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *token1,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *token2);}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{bpe_8h_adc2c1373ba61c1e84373e4f407f6ec23}{calcularAlfabetoTokens}}(\mbox{\hyperlink{struct_matriz_texto}{MatrizTexto}}\ *texto\_corpus,}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_matriz_tokens}{MatrizTokens}}\ *alfabeto\_tokens,}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ num\_tokens\_desejado);}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//BPE\_H}}
+
+\end{DoxyCode}

@@ -8,55 +8,108 @@
 #include "vetorizacao.h"
 
 // =============================================================
-//  Estruturas de Dados (Mantidas do teu código)
+//  Estruturas de Dados (R2.1 / R2.2)
 // =============================================================
+
+/**
+ * @brief Estrutura que representa um Documento (Nó da Lista Ligada).
+ * Contém a informação textual, a versão tokenizada e vetorial.
+ */
 typedef struct t_doc {
-    char *titulo;
-    char *texto_original;
+    char *titulo;           /**< Nome do ficheiro ou título do documento */
+    char *texto_original;   /**< O conteúdo integral do texto */
 
-    int *ids_tokens;        // Resultado R1.4
-    int num_ids;
-    int *vetor_tf;          // Resultado R1.5
-    int vocab_size;
+    int *ids_tokens;        /**< Array de IDs após a tokenização (R1.4) */
+    int num_ids;            /**< Tamanho do array ids_tokens */
 
-    struct t_doc *proximo;  // "Fio" para a próxima caixa
+    int *vetor_tf;          /**< Vetor de frequências (Histograma) (R1.5) */
+    int vocab_size;         /**< Tamanho do vocabulário no momento da criação */
+
+    struct t_doc *proximo;  /**< Ponteiro para o próximo documento na lista */
 } t_doc;
 
+/**
+ * @brief Estrutura que representa a Lista Ligada de Documentos.
+ * Contém o ponteiro para o início da lista e uma referência partilhada para o vocabulário.
+ */
 typedef struct {
-    t_doc *inicio;              // Ponteiro para a primeira caixa
-    int num_documentos;
-    MatrizTokens *vocabulario;  // O Alfabeto
+    t_doc *inicio;              /**< Ponteiro para o primeiro nó (Head) */
+    int num_documentos;         /**< Contador de documentos na lista */
+    MatrizTokens *vocabulario;  /**< Ponteiro para o alfabeto usado nestes documentos */
 } t_lista_docs;
 
 
 // =============================================================
-//  Funções R2.1 e R2.2
+//  Funções de Gestão de Documentos
 // =============================================================
 
-// Cria a Prateleira
+/**
+ * @brief Inicializa uma lista de documentos vazia.
+ * @param vocab Ponteiro para o vocabulário que será usado na tokenização dos documentos.
+ * @return t_lista_docs Lista inicializada.
+ */
 t_lista_docs criarListaDocumentos(MatrizTokens *vocab);
 
-// Adiciona no fim (já tens esta)
+/**
+ * @brief Adiciona um documento ao final da lista.
+ * Esta função chama internamente as rotinas de tokenização e vetorização.
+ * @param lista Ponteiro para a lista.
+ * @param titulo Título do documento.
+ * @param texto_original Conteúdo do documento.
+ * @return int 1 se sucesso, 0 se erro.
+ * @note **Complexidade:** O(N) para percorrer a lista até ao fim + custo da tokenização.
+ */
 int adicionarDocumentoLista(t_lista_docs *lista, const char *titulo, const char *texto_original);
 
-// Mostra o que está na Prateleira
+/**
+ * @brief Percorre a lista e imprime os dados básicos de cada documento.
+ * @param lista A lista a imprimir.
+ */
 void listarDocumentos(t_lista_docs lista);
 
-// Destrói a Prateleira
+/**
+ * @brief Liberta toda a memória da lista (incluindo todos os nós e arrays internos).
+ * @param lista Ponteiro para a lista a destruir.
+ */
 void libertarListaDocumentos(t_lista_docs *lista);
 
-// --- NOVAS FUNÇÕES (Para completar o R2.1) ---
+// --- NOVAS FUNÇÕES (R2.1) ---
 
-// Obter um documento numa posição especifica (apenas leitura)
+/**
+ * @brief Retorna um ponteiro para o documento num determinado índice.
+ * @param lista A lista de documentos.
+ * @param indice A posição desejada (base 0).
+ * @return t_doc* Ponteiro para o nó ou NULL se o índice for inválido.
+ * @note **Complexidade:** O(K), onde K é o índice solicitado (acesso sequencial).
+ */
 t_doc* obterDocumentoPorIndice(t_lista_docs lista, int indice);
 
-// Inserir um documento numa posição especifica (0 = inicio)
+/**
+ * @brief Insere um novo documento numa posição específica da lista.
+ * @param lista Ponteiro para a lista.
+ * @param titulo Título do novo documento.
+ * @param texto Conteúdo do novo documento.
+ * @param indice Posição onde inserir (0 = início, N = fim).
+ * @return int 1 se sucesso, 0 se erro ou índice inválido.
+ * @note **Complexidade:** O(K) para chegar à posição de inserção.
+ */
 int inserirDocumentoNoIndice(t_lista_docs *lista, const char *titulo, const char *texto, int indice);
 
-// Remover um documento numa posição especifica
+/**
+ * @brief Remove e liberta a memória de um documento numa posição específica.
+ * @param lista Ponteiro para a lista.
+ * @param indice Índice do documento a remover.
+ * @return int 1 se sucesso, 0 se erro.
+ */
 int removerDocumentoPorIndice(t_lista_docs *lista, int indice);
 
-// Pesquisar documentos que contêm um ID de token especifico
+/**
+ * @brief Pesquisa em toda a lista quais os documentos que contêm um determinado Token ID.
+ * Utiliza o vetor TF para verificar se a frequência é > 0.
+ * @param lista A lista de documentos.
+ * @param token_id O ID do token a pesquisar.
+ * @note **Complexidade:** O(N), onde N é o número de documentos na lista.
+ */
 void pesquisarDocumentosPorTokenID(t_lista_docs lista, int token_id);
 
 #endif //GESTAO_DOCUMENTOS_H

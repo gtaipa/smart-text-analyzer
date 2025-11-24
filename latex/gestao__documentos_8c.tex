@@ -1,0 +1,88 @@
+\doxysection{gestao\+\_\+documentos.\+c File Reference}
+\hypertarget{gestao__documentos_8c}{}\label{gestao__documentos_8c}\index{gestao\_documentos.c@{gestao\_documentos.c}}
+{\ttfamily \#include "{}gestao\+\_\+documentos.\+h"{}}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{gestao__documentos_8c_aba042eaa170b850f87457a86f12ed1f9}{compat\+\_\+strdup}} (const char \texorpdfstring{$\ast$}{*}s)
+\begin{DoxyCompactList}\small\item\em Duplica uma string alocando memoria (compatível com POSIX strdup). \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structt__lista__docs}{t\+\_\+lista\+\_\+docs}} \mbox{\hyperlink{gestao__documentos_8c_a495bd28a19aab8355bfe95dc735aff45}{criar\+Lista\+Documentos}} (\mbox{\hyperlink{struct_matriz_tokens}{Matriz\+Tokens}} \texorpdfstring{$\ast$}{*}vocab)
+\item 
+int \mbox{\hyperlink{gestao__documentos_8c_a0125cec3c2e9ca159acc390ac9e7caf8}{adicionar\+Documento\+Lista}} (\mbox{\hyperlink{structt__lista__docs}{t\+\_\+lista\+\_\+docs}} \texorpdfstring{$\ast$}{*}lista, const char \texorpdfstring{$\ast$}{*}titulo, const char \texorpdfstring{$\ast$}{*}texto\+\_\+original)
+\item 
+void \mbox{\hyperlink{gestao__documentos_8c_ab4adcbe0cbb5a18f4a0d8310f0f04ed7}{listar\+Documentos}} (\mbox{\hyperlink{structt__lista__docs}{t\+\_\+lista\+\_\+docs}} lista)
+\item 
+void \mbox{\hyperlink{gestao__documentos_8c_a5034885812e44f9965250d127f4f4001}{libertar\+Lista\+Documentos}} (\mbox{\hyperlink{structt__lista__docs}{t\+\_\+lista\+\_\+docs}} \texorpdfstring{$\ast$}{*}lista)
+\item 
+\mbox{\hyperlink{structt__doc}{t\+\_\+doc}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{gestao__documentos_8c_a2ac44ce36e53e1bd2cb0b23aa648b9a6}{obter\+Documento\+Por\+Indice}} (\mbox{\hyperlink{structt__lista__docs}{t\+\_\+lista\+\_\+docs}} lista, int indice)
+\item 
+int \mbox{\hyperlink{gestao__documentos_8c_a97ae65e3374a282a88b1bab9c0afe8b4}{inserir\+Documento\+No\+Indice}} (\mbox{\hyperlink{structt__lista__docs}{t\+\_\+lista\+\_\+docs}} \texorpdfstring{$\ast$}{*}lista, const char \texorpdfstring{$\ast$}{*}titulo, const char \texorpdfstring{$\ast$}{*}texto, int indice)
+\item 
+int \mbox{\hyperlink{gestao__documentos_8c_a52dc5853b5dd334a8a84cc9896d087d1}{remover\+Documento\+Por\+Indice}} (\mbox{\hyperlink{structt__lista__docs}{t\+\_\+lista\+\_\+docs}} \texorpdfstring{$\ast$}{*}lista, int indice)
+\item 
+void \mbox{\hyperlink{gestao__documentos_8c_aea9a92b5d67b8e25d4a4cb1ca9bb0059}{pesquisar\+Documentos\+Por\+Token\+ID}} (\mbox{\hyperlink{structt__lista__docs}{t\+\_\+lista\+\_\+docs}} lista, int token\+\_\+id)
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{gestao__documentos_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{gestao__documentos_8c_a0125cec3c2e9ca159acc390ac9e7caf8}\index{gestao\_documentos.c@{gestao\_documentos.c}!adicionarDocumentoLista@{adicionarDocumentoLista}}
+\index{adicionarDocumentoLista@{adicionarDocumentoLista}!gestao\_documentos.c@{gestao\_documentos.c}}
+\doxysubsubsection{\texorpdfstring{adicionarDocumentoLista()}{adicionarDocumentoLista()}}
+{\footnotesize\ttfamily \label{gestao__documentos_8c_a0125cec3c2e9ca159acc390ac9e7caf8} 
+int adicionar\+Documento\+Lista (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structt__lista__docs}{t\+\_\+lista\+\_\+docs}} \texorpdfstring{$\ast$}{*}}]{lista}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{titulo}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{texto\+\_\+original}{}\end{DoxyParamCaption})}
+
+\Hypertarget{gestao__documentos_8c_aba042eaa170b850f87457a86f12ed1f9}\index{gestao\_documentos.c@{gestao\_documentos.c}!compat\_strdup@{compat\_strdup}}
+\index{compat\_strdup@{compat\_strdup}!gestao\_documentos.c@{gestao\_documentos.c}}
+\doxysubsubsection{\texorpdfstring{compat\_strdup()}{compat\_strdup()}}
+{\footnotesize\ttfamily \label{gestao__documentos_8c_aba042eaa170b850f87457a86f12ed1f9} 
+char \texorpdfstring{$\ast$}{*} compat\+\_\+strdup (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{s}{}\end{DoxyParamCaption})}
+
+
+
+Duplica uma string alocando memoria (compatível com POSIX strdup). 
+
+\Hypertarget{gestao__documentos_8c_a495bd28a19aab8355bfe95dc735aff45}\index{gestao\_documentos.c@{gestao\_documentos.c}!criarListaDocumentos@{criarListaDocumentos}}
+\index{criarListaDocumentos@{criarListaDocumentos}!gestao\_documentos.c@{gestao\_documentos.c}}
+\doxysubsubsection{\texorpdfstring{criarListaDocumentos()}{criarListaDocumentos()}}
+{\footnotesize\ttfamily \label{gestao__documentos_8c_a495bd28a19aab8355bfe95dc735aff45} 
+\mbox{\hyperlink{structt__lista__docs}{t\+\_\+lista\+\_\+docs}} criar\+Lista\+Documentos (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_matriz_tokens}{Matriz\+Tokens}} \texorpdfstring{$\ast$}{*}}]{vocab}{}\end{DoxyParamCaption})}
+
+\Hypertarget{gestao__documentos_8c_a97ae65e3374a282a88b1bab9c0afe8b4}\index{gestao\_documentos.c@{gestao\_documentos.c}!inserirDocumentoNoIndice@{inserirDocumentoNoIndice}}
+\index{inserirDocumentoNoIndice@{inserirDocumentoNoIndice}!gestao\_documentos.c@{gestao\_documentos.c}}
+\doxysubsubsection{\texorpdfstring{inserirDocumentoNoIndice()}{inserirDocumentoNoIndice()}}
+{\footnotesize\ttfamily \label{gestao__documentos_8c_a97ae65e3374a282a88b1bab9c0afe8b4} 
+int inserir\+Documento\+No\+Indice (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structt__lista__docs}{t\+\_\+lista\+\_\+docs}} \texorpdfstring{$\ast$}{*}}]{lista}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{titulo}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{texto}{, }\item[{int}]{indice}{}\end{DoxyParamCaption})}
+
+\Hypertarget{gestao__documentos_8c_a5034885812e44f9965250d127f4f4001}\index{gestao\_documentos.c@{gestao\_documentos.c}!libertarListaDocumentos@{libertarListaDocumentos}}
+\index{libertarListaDocumentos@{libertarListaDocumentos}!gestao\_documentos.c@{gestao\_documentos.c}}
+\doxysubsubsection{\texorpdfstring{libertarListaDocumentos()}{libertarListaDocumentos()}}
+{\footnotesize\ttfamily \label{gestao__documentos_8c_a5034885812e44f9965250d127f4f4001} 
+void libertar\+Lista\+Documentos (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structt__lista__docs}{t\+\_\+lista\+\_\+docs}} \texorpdfstring{$\ast$}{*}}]{lista}{}\end{DoxyParamCaption})}
+
+\Hypertarget{gestao__documentos_8c_ab4adcbe0cbb5a18f4a0d8310f0f04ed7}\index{gestao\_documentos.c@{gestao\_documentos.c}!listarDocumentos@{listarDocumentos}}
+\index{listarDocumentos@{listarDocumentos}!gestao\_documentos.c@{gestao\_documentos.c}}
+\doxysubsubsection{\texorpdfstring{listarDocumentos()}{listarDocumentos()}}
+{\footnotesize\ttfamily \label{gestao__documentos_8c_ab4adcbe0cbb5a18f4a0d8310f0f04ed7} 
+void listar\+Documentos (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structt__lista__docs}{t\+\_\+lista\+\_\+docs}}}]{lista}{}\end{DoxyParamCaption})}
+
+\Hypertarget{gestao__documentos_8c_a2ac44ce36e53e1bd2cb0b23aa648b9a6}\index{gestao\_documentos.c@{gestao\_documentos.c}!obterDocumentoPorIndice@{obterDocumentoPorIndice}}
+\index{obterDocumentoPorIndice@{obterDocumentoPorIndice}!gestao\_documentos.c@{gestao\_documentos.c}}
+\doxysubsubsection{\texorpdfstring{obterDocumentoPorIndice()}{obterDocumentoPorIndice()}}
+{\footnotesize\ttfamily \label{gestao__documentos_8c_a2ac44ce36e53e1bd2cb0b23aa648b9a6} 
+\mbox{\hyperlink{structt__doc}{t\+\_\+doc}} \texorpdfstring{$\ast$}{*} obter\+Documento\+Por\+Indice (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structt__lista__docs}{t\+\_\+lista\+\_\+docs}}}]{lista}{, }\item[{int}]{indice}{}\end{DoxyParamCaption})}
+
+\Hypertarget{gestao__documentos_8c_aea9a92b5d67b8e25d4a4cb1ca9bb0059}\index{gestao\_documentos.c@{gestao\_documentos.c}!pesquisarDocumentosPorTokenID@{pesquisarDocumentosPorTokenID}}
+\index{pesquisarDocumentosPorTokenID@{pesquisarDocumentosPorTokenID}!gestao\_documentos.c@{gestao\_documentos.c}}
+\doxysubsubsection{\texorpdfstring{pesquisarDocumentosPorTokenID()}{pesquisarDocumentosPorTokenID()}}
+{\footnotesize\ttfamily \label{gestao__documentos_8c_aea9a92b5d67b8e25d4a4cb1ca9bb0059} 
+void pesquisar\+Documentos\+Por\+Token\+ID (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structt__lista__docs}{t\+\_\+lista\+\_\+docs}}}]{lista}{, }\item[{int}]{token\+\_\+id}{}\end{DoxyParamCaption})}
+
+\Hypertarget{gestao__documentos_8c_a52dc5853b5dd334a8a84cc9896d087d1}\index{gestao\_documentos.c@{gestao\_documentos.c}!removerDocumentoPorIndice@{removerDocumentoPorIndice}}
+\index{removerDocumentoPorIndice@{removerDocumentoPorIndice}!gestao\_documentos.c@{gestao\_documentos.c}}
+\doxysubsubsection{\texorpdfstring{removerDocumentoPorIndice()}{removerDocumentoPorIndice()}}
+{\footnotesize\ttfamily \label{gestao__documentos_8c_a52dc5853b5dd334a8a84cc9896d087d1} 
+int remover\+Documento\+Por\+Indice (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structt__lista__docs}{t\+\_\+lista\+\_\+docs}} \texorpdfstring{$\ast$}{*}}]{lista}{, }\item[{int}]{indice}{}\end{DoxyParamCaption})}
+
