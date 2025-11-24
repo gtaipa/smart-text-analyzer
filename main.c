@@ -353,6 +353,48 @@ void testar_R2_3() {
 }
 
 
+// Localização: No ficheiro main.c, após o teste R2.3
+
+void testar_R2_4_Binario(t_lista_docs lista_original) {
+    printf("\n=== Teste R2.4: Persistencia Binaria (Guardar e Carregar) ===\n");
+    const char *ficheiro = "colecao.bin";
+    t_lista_docs lista_nova;
+
+    // 1. Guardar
+    if (guardarColecaoBinaria(ficheiro, lista_original)) {
+        printf("Colecao guardada com sucesso em '%s'.\n", ficheiro);
+    } else {
+        printf("Falha ao guardar a colecao binaria.\n");
+        return;
+    }
+
+    // 2. Limpar a lista original da memória (Para simular o fecho do programa)
+    // Nota: É importante libertar o vocabulário e a lista, se tiver alocado no main.c
+
+    // 3. Carregar
+    printf("\nA carregar dados do ficheiro binario... \n");
+    lista_nova = carregarColecaoBinaria(ficheiro);
+
+    // 4. Validar
+    if (lista_nova.inicio != NULL) {
+        listarDocumentos(lista_nova);
+        printf("Vocabulario carregado (%d tokens):\n", lista_nova.vocabulario->usados);
+        listarTokens(*lista_nova.vocabulario);
+
+        // Limpeza final do teste (a lista_nova foi alocada aqui)
+        if (lista_nova.vocabulario) {
+            libertarTokens(*lista_nova.vocabulario);
+            free(lista_nova.vocabulario);
+        }
+        libertarListaDocumentos(&lista_nova);
+    } else {
+        printf("Falha ao carregar a colecao binaria.\n");
+    }
+
+    printf("=== Teste R2.4 Concluido ===\n");
+}
+
+
 int main() {
     printf("=== INICIO DOS TESTES DO PROJETO ===\n");
     testar_R1_1_e_R1_2();
