@@ -3,67 +3,86 @@
 #include <stdlib.h>
 #include <string.h>
 
-// =============================================================
-//  Implementações R1.3 (BPE)
-// =============================================================
-
+//  Implementações R1.3
+// Passo 1: O "Alfabeto" Inicial.
+// Antes de procurar pares, tenho de saber quais sao os caracteres individuais que existem no texto.
 int inicializarTokensUnicos(MatrizTexto m_texto, MatrizTokens *m_tokens) {
+    // Truque: Um array de 256 posicoes (tabela ASCII) para marcar o que ja vi.
+    // Tudo a zero (0) significa "ainda nao vi".
     unsigned char vistos[256] = {0};
-    char token[2];
+    char token[2]; // Espaço para 1 letra + o terminador \0
 
+    // Vou percorrer todas as frases (linhas)
     for (int i = 0; i < m_texto.linhas_usadas; i++) {
         char *linha = m_texto.linhas[i];
+
+        // Vou percorrer letra a letra da frase
         for (int j = 0; linha[j] != '\0'; j++) {
             unsigned char c = (unsigned char)linha[j];
-            if (!vistos[c]) {
-                vistos[c] = 1;
+
+            // Se ainda nao vi esta letra, adiciono aos tokens conhecidos
+            if (vistos[c] == 0) {
+                vistos[c] = 1; // Marco como visto
+                // Preparo a string do token
                 token[0] = linha[j];
                 token[1] = '\0';
-                if (!adicionarToken(m_tokens, token))
+                // Adiciono à lista (se falhar memoria, devolvo erro)
+                if (!adicionarToken(m_tokens, token)) {
                     return 0;
+                }
             }
         }
     }
-    return 1;
+    return 1; // Sucesso
 }
 
+// Passo 2: O "Detetive".
+// Esta funcao percorre o texto para descobrir qual é o par de tokens que aparece mais vezes junto.
+// Ex: Se "a" e "r" aparecem muito juntos ("ar"), vamos encontra-los aqui.
 char *encontrarParMaisFrequente(MatrizTexto m_texto, MatrizTokens m_tokens, int *freq_max) {
     int max_frequencia = 0;
     char *melhor_par = NULL;
-    char temp[3];
-
+    char par_teste[100];
+    // Verificacao basica: preciso de pelo menos 2 tokens para fazer um par.
     if (m_tokens.usados < 2) {
         *freq_max = 0;
         return NULL;
     }
-
+    // Ciclo duplo: Testar todos contra todos (Token A + Token B)
     for (int i = 0; i < m_tokens.usados; i++) {
-        char *t1 = m_tokens.tokens[i];
-        if (strlen(t1) > 1) continue; // Simplificação: só pares de 1 char
-
         for (int j = 0; j < m_tokens.usados; j++) {
-            char *t2 = m_tokens.tokens[j];
-            if (strlen(t2) > 1) continue; // Simplificação
 
-            temp[0] = t1[0];
-            temp[1] = t2[0];
-            temp[2] = '\0';
-
+            // SIMPLIFICACAO PARA O PROJETO:
+            // Para nao complicar muito, so vou testar juncoes de tokens pequenos (1 caracter).
+            // Isto evita que o algoritmo fique demasiado lento na pesquisa.
+            if (strlen(m_tokens.tokens[i]) > 1 || strlen(m_tokens.tokens[j]) > 1) {
+                continue;
+            }
+            // Construo o par (ex: 't' + 'h' -> "th")
+            sprintf(par_teste, "%s%s", m_tokens.tokens[i], m_tokens.tokens[j]);
+            // Agora vou contar quantas vezes este par aparece no texto todo
             int freq_atual = 0;
             for (int k = 0; k < m_texto.linhas_usadas; k++) {
                 char *linha = m_texto.linhas[k];
                 char *ptr = linha;
-                while ((ptr = strstr(ptr, temp)) != NULL) {
+                // O strstr procura a ocorrencia da string.
+                // Enquanto encontrar o par na linha, conto e avanço.
+                while ((ptr = strstr(ptr, par_teste)) != NULL) {
                     freq_atual++;
-                    ptr += 2; // Avança 2 para não sobrepor
+                    ptr += strlen(par_teste); // Avanço para nao contar o mesmo duas vezes
                 }
             }
-
+            // Se este par ganhou ao anterior, atualizo o campeao
             if (freq_atual > max_frequencia) {
                 max_frequencia = freq_atual;
-                free(melhor_par); // Liberta o melhor anterior
-                melhor_par = strdup(temp);
-                if (!melhor_par) return NULL; // Falha de memória
+
+                // Limpo o campeao antigo se existir
+                if (melhor_par != NULL) free(melhor_par);
+
+                // Guardo o novo campeao (strdup faz malloc e copy automatico)
+                // Nota: strdup nao e standard C antigo, mas aqui da jeito.
+                // Se o compilador reclamar, usa-se malloc + strcpy.
+                melhor_par = strdup(par_teste);
             }
         }
     }
@@ -72,89 +91,69 @@ char *encontrarParMaisFrequente(MatrizTexto m_texto, MatrizTokens m_tokens, int 
     return melhor_par;
 }
 
+// Passo 3: A "Fusão".
+// Agora que sabemos que "a" e "r" sao o melhor par, vamos ao texto e juntamos tudo.
+// Nota: Em termos de texto, a string "b a r" é igual a "b ar", mas conceptualmente mudamos o token.
+// Nesta implementacao simplificada, a string nao muda muito, mas preparamos o terreno para o futuro.
 int aplicarFusaoNoCorpus(MatrizTexto *m_texto, const char *token1, const char *token2) {
     int fusoes = 0;
-    char par[3] = {token1[0], token2[0], '\0'};
+
+    // Crio a string combinada que procuro (ex: "ar")
+    char par_alvo[100];
+    sprintf(par_alvo, "%s%s", token1, token2);
 
     for (int i = 0; i < m_texto->linhas_usadas; i++) {
-        char *orig = m_texto->linhas[i];
-        int tam_orig = strlen(orig);
-        int count = 0;
-        char *ptr = orig;
+        char *linha_original = m_texto->linhas[i];
 
-        // 1. Contar ocorrências
-        while ((ptr = strstr(ptr, par)) != NULL) {
-            count++;
-            ptr += 2;
+        // Se a linha nao tiver o par, passo à frente
+        if (strstr(linha_original, par_alvo) == NULL) {
+            continue;
         }
-        if (count == 0) continue;
 
-        // 2. Alocar nova linha (nesta simplificação, o tamanho não muda)
-        char *nova = malloc(tam_orig + 1);
-        if (!nova) return -1;
+        // Se encontrei, vou reconstruir a linha.
+        // Como estou a fundir, o tamanho nao aumenta, por isso aloco o mesmo tamanho.
+        char *nova_linha = malloc(strlen(linha_original) + 1);
+        if (nova_linha == NULL) return -1;
 
-        // 3. Reconstruir a string
-        char *p_orig = orig;
-        char *p_nova = nova;
-        char *next;
+        // Copio a linha original para a nova (nesta versao simples do BPE em C,
+        // a representacao textual mantem-se, o que muda é que agora "ar" é um token só na lista).
+        strcpy(nova_linha, linha_original);
 
-        while (*p_orig) {
-            next = strstr(p_orig, par);
-            if (!next) { // Não há mais pares
-                strcpy(p_nova, p_orig); // Copia o resto
-                break;
-            }
-            // Copia a parte ANTES do par
-            int antes = next - p_orig;
-            strncpy(p_nova, p_orig, antes);
-            p_nova += antes;
-            
-            // "Funde" (copia o próprio par, mas como uma unidade)
-            strcpy(p_nova, par);
-            p_nova += 2;
-            
-            p_orig = next + 2; // Avança o ponteiro original
-            fusoes++;
-        }
-        
-        free(m_texto->linhas[i]); // Liberta a linha antiga
-        m_texto->linhas[i] = nova; // Aponta para a nova
+        // Troco o ponteiro antigo pelo novo
+        free(m_texto->linhas[i]);
+        m_texto->linhas[i] = nova_linha;
+
+        fusoes++;
     }
     return fusoes;
 }
 
-int calcularAlfabetoTokens(MatrizTexto *texto_corpus,
-                           MatrizTokens *alfabeto_tokens,
-                           int num_tokens_desejado) {
-
-    if (!inicializarTokensUnicos(*texto_corpus, alfabeto_tokens))
+int calcularAlfabetoTokens(MatrizTexto *texto_corpus,MatrizTokens *alfabeto_tokens,int num_tokens_desejado) {
+    //Começamos com as letras individuais
+    if (!inicializarTokensUnicos(*texto_corpus, alfabeto_tokens)) {
         return 0;
-
+    }
+    //Enquanto nao tiver tokens suficientes
     while (alfabeto_tokens->usados < num_tokens_desejado) {
-        int freq;
-        char *par = encontrarParMaisFrequente(*texto_corpus, *alfabeto_tokens, &freq);
-
-        // Condição de paragem: não há mais pares ou não são frequentes
-        if (!par || freq <= 1) {
-            free(par); // Liberta o par encontrado (se houver)
+        int frequencia;
+        // Procura qual o par mais repetido no texto
+        char *par = encontrarParMaisFrequente(*texto_corpus, *alfabeto_tokens, &frequencia);
+        // Se nao encontrar par, nao vale a pena fundir.
+        if (par == NULL || frequencia <= 1) {
+            if(par) free(par);
             break;
         }
-
-        // Adiciona o novo token (ex: "an") ao alfabeto
+        // Adiciona o novo token ao vocabulario
         if (!adicionarToken(alfabeto_tokens, par)) {
             free(par);
             return 0;
         }
-
-        // Reescreve o corpus (aqui é onde a simplificação acontece)
-        // Substitui 'a' e 'n' por "an"
-        if (aplicarFusaoNoCorpus(texto_corpus, &par[0], &par[1]) == -1) {
-            free(par);
-            return 0;
-        }
-
-        free(par); // Liberta a string do par
+        // "Aplica" a fusao.
+        // Separo o par em 2 chars para a funcao
+        char t1[2] = {par[0], '\0'};
+        char t2[2] = {par[1], '\0'};
+        aplicarFusaoNoCorpus(texto_corpus, t1, t2);
+        free(par);
     }
-
     return 1;
 }
