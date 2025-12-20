@@ -7,15 +7,12 @@
 #include "manipulacao_matrizes.h"
 #include "vetorizacao.h"
 
-// =============================================================
-//  Estruturas de Dados (R2.1 / R2.2)
-// =============================================================
-
 /**
  * @brief Estrutura que representa um Documento (Nó da Lista Ligada).
  * Contém a informação textual, a versão tokenizada e vetorial.
+ * [R2.1] Nome alterado de t_doc para TK_TF_NODE conforme requisito.
  */
-typedef struct t_doc {
+typedef struct TK_TF_NODE {
     char *titulo;           /**< Nome do ficheiro ou título do documento */
     char *texto_original;   /**< O conteúdo integral do texto */
 
@@ -25,18 +22,19 @@ typedef struct t_doc {
     int *vetor_tf;          /**< Vetor de frequências (Histograma) (R1.5) */
     int vocab_size;         /**< Tamanho do vocabulário no momento da criação */
 
-    struct t_doc *proximo;  /**< Ponteiro para o próximo documento na lista */
-} t_doc;
+    struct TK_TF_NODE *proximo;  /**< Ponteiro para o próximo documento na lista */
+} TK_TF_NODE;
 
 /**
  * @brief Estrutura que representa a Lista Ligada de Documentos.
  * Contém o ponteiro para o início da lista e uma referência partilhada para o vocabulário.
+ * [R2.1] Nome alterado de t_lista_docs para LL_TK_TF conforme requisito.
  */
 typedef struct {
-    t_doc *inicio;              /**< Ponteiro para o primeiro nó (Head) */
+    TK_TF_NODE *inicio;         /**< Ponteiro para o primeiro nó (Head) */
     int num_documentos;         /**< Contador de documentos na lista */
     MatrizTokens *vocabulario;  /**< Ponteiro para o alfabeto usado nestes documentos */
-} t_lista_docs;
+} LL_TK_TF;
 
 
 // =============================================================
@@ -46,9 +44,9 @@ typedef struct {
 /**
  * @brief Inicializa uma lista de documentos vazia.
  * @param vocab Ponteiro para o vocabulário que será usado na tokenização dos documentos.
- * @return t_lista_docs Lista inicializada.
+ * @return LL_TK_TF Lista inicializada.
  */
-t_lista_docs criarListaDocumentos(MatrizTokens *vocab);
+LL_TK_TF criarListaDocumentos(MatrizTokens *vocab);
 
 /**
  * @brief Adiciona um documento ao final da lista.
@@ -59,19 +57,19 @@ t_lista_docs criarListaDocumentos(MatrizTokens *vocab);
  * @return int 1 se sucesso, 0 se erro.
  * @note **Complexidade:** O(N) para percorrer a lista até ao fim + custo da tokenização.
  */
-int adicionarDocumentoLista(t_lista_docs *lista, const char *titulo, const char *texto_original);
+int adicionarDocumentoLista(LL_TK_TF *lista, const char *titulo, const char *texto_original);
 
 /**
  * @brief Percorre a lista e imprime os dados básicos de cada documento.
  * @param lista A lista a imprimir.
  */
-void listarDocumentos(t_lista_docs lista);
+void listarDocumentos(LL_TK_TF lista);
 
 /**
  * @brief Liberta toda a memória da lista (incluindo todos os nós e arrays internos).
  * @param lista Ponteiro para a lista a destruir.
  */
-void libertarListaDocumentos(t_lista_docs *lista);
+void libertarListaDocumentos(LL_TK_TF *lista);
 
 // --- NOVAS FUNÇÕES (R2.1) ---
 
@@ -79,10 +77,10 @@ void libertarListaDocumentos(t_lista_docs *lista);
  * @brief Retorna um ponteiro para o documento num determinado índice.
  * @param lista A lista de documentos.
  * @param indice A posição desejada (base 0).
- * @return t_doc* Ponteiro para o nó ou NULL se o índice for inválido.
+ * @return TK_TF_NODE* Ponteiro para o nó ou NULL se o índice for inválido.
  * @note **Complexidade:** O(K), onde K é o índice solicitado (acesso sequencial).
  */
-t_doc* obterDocumentoPorIndice(t_lista_docs lista, int indice);
+TK_TF_NODE* obterDocumentoPorIndice(LL_TK_TF lista, int indice);
 
 /**
  * @brief Insere um novo documento numa posição específica da lista.
@@ -93,7 +91,7 @@ t_doc* obterDocumentoPorIndice(t_lista_docs lista, int indice);
  * @return int 1 se sucesso, 0 se erro ou índice inválido.
  * @note **Complexidade:** O(K) para chegar à posição de inserção.
  */
-int inserirDocumentoNoIndice(t_lista_docs *lista, const char *titulo, const char *texto, int indice);
+int inserirDocumentoNoIndice(LL_TK_TF *lista, const char *titulo, const char *texto, int indice);
 
 /**
  * @brief Remove e liberta a memória de um documento numa posição específica.
@@ -101,7 +99,7 @@ int inserirDocumentoNoIndice(t_lista_docs *lista, const char *titulo, const char
  * @param indice Índice do documento a remover.
  * @return int 1 se sucesso, 0 se erro.
  */
-int removerDocumentoPorIndice(t_lista_docs *lista, int indice);
+int removerDocumentoPorIndice(LL_TK_TF *lista, int indice);
 
 /**
  * @brief Pesquisa em toda a lista quais os documentos que contêm um determinado Token ID.
@@ -110,6 +108,6 @@ int removerDocumentoPorIndice(t_lista_docs *lista, int indice);
  * @param token_id O ID do token a pesquisar.
  * @note **Complexidade:** O(N), onde N é o número de documentos na lista.
  */
-void pesquisarDocumentosPorTokenID(t_lista_docs lista, int token_id);
+void pesquisarDocumentosPorTokenID(LL_TK_TF lista, int token_id);
 
 #endif //GESTAO_DOCUMENTOS_H
