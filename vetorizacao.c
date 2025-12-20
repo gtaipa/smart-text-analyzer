@@ -1,7 +1,69 @@
 #include "vetorizacao.h"
 //  Requisito 1.4: Tokenizacao das frases
 
+
+// Definicao da estrutura TrieNode
+int *tokenizarFraseOtimizada(const char *frase, TrieNode *trie, int *n_ids)
+{
+    int capacidade = 16;
+    int usados = 0;
+    int *ids = malloc(capacidade * sizeof(int));
+    
+    int tamanho_frase = strlen(frase);
+    int pos = 0;
+    
+    while (pos < tamanho_frase)
+    {
+        TrieNode *atual = trie;
+        int melhor_id = -1;
+        int melhor_tamanho = 0;
+        int offset = 0;
+        
+        // Buscar o maior token possível a partir de pos
+        while (pos + offset < tamanho_frase)
+        {
+            unsigned char c = (unsigned char)frase[pos + offset];
+            
+            if (atual->filhos[c] == NULL) {
+                break;
+            }
+            
+            atual = atual->filhos[c];
+            offset++;
+            
+            // Se este nó é fim de token, guardar como candidato
+            if (atual->token_id != -1) {
+                melhor_id = atual->token_id;
+                melhor_tamanho = offset;
+            }
+        }
+        
+        // Redimensionar se necessário
+        if (usados == capacidade) {
+            capacidade *= 2;
+            int *tmp = realloc(ids, capacidade * sizeof(int));
+            if (!tmp) {
+                free(ids);
+                return NULL;
+            }
+            ids = tmp;
+        }
+        
+        if (melhor_id != -1) {
+            ids[usados++] = melhor_id;
+            pos += melhor_tamanho;
+        } else {
+            ids[usados++] = -1;  // Token desconhecido
+            pos++;
+        }
+    }
+    
+    *n_ids = usados;
+    return ids;
+}
+
 // O objetivo desta funcao e transformar uma frase (texto) numa lista de numeros (IDs).
+
 int *tokenizarFrase(const char *frase, MatrizTokens tokens, int *n_ids)
 {
     // aloca lista inicial para ids
