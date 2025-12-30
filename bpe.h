@@ -64,8 +64,5 @@ int aplicarFusaoNoCorpus(MatrizTexto *m_texto, const char *token1, const char *t
  * * @note **Complexidade Global:** Depende do número de fusões (K). Aproximadamente O(K * Custo_Procura),
  * o que torna o algoritmo intensivo computacionalmente para textos grandes.
  */
-int calcularAlfabetoTokens(MatrizTexto *texto_corpus,
-                           MatrizTokens *alfabeto_tokens,
-                           int num_tokens_desejado);
 
 #endif //BPE_H
