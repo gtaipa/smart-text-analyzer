@@ -7,23 +7,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define ALPHABET_SIZE 256
+// =============================================================
 //  Funcoes R1.4 (Tokenizacao)
+// =============================================================
 
-
-typedef struct TrieNode {
-    struct TrieNode *filhos[ALPHABET_SIZE];
-    int token_id;
-    int tamanho;
-} TrieNode;
-
-TrieNode* criarNoTrie();
-void inserirTokenTrie(TrieNode *raiz, const char *token, int id);
-TrieNode* construirTrieVocabulario(MatrizTokens tokens);
-void libertarTrie(TrieNode *node);
-
-// Versão otimizada
-int* tokenizarFraseOtimizada(const char *frase, TrieNode *trie, int *n_ids);
 /**
  * @brief Converte uma string numa sequência de IDs de tokens usando "Greedy Longest-Match".
  * Percorre a frase e, em cada posição, tenta encontrar o maior token possível do vocabulário
@@ -62,6 +49,5 @@ int* calcularFrequenciaTokens(MatrizTexto m_texto,
  * @note **Complexidade:** O(N), onde N é o número de tokens na frase.
  */
 int* calcularTfParaFrase(int *ids_frase, int num_ids_frase, int tamanho_vocabulario);
-
 
 #endif //VETORIZACAO_H

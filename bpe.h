@@ -48,21 +48,5 @@ char *encontrarParMaisFrequente(MatrizTexto m_texto, MatrizTokens m_tokens, int 
  * scanning linear e reconstrução das strings.
  */
 int aplicarFusaoNoCorpus(MatrizTexto *m_texto, const char *token1, const char *token2);
-
-/**
- * @brief Algoritmo Principal BPE (Byte Pair Encoding).
- * * Executa o processo iterativo de construção do vocabulário:
- * 1. Inicializa o vocabulário com caracteres únicos.
- * 2. Enquanto o número de tokens for menor que o desejado:
- * - [cite_start]Encontra o par mais frequente[cite: 153].
- * - Adiciona esse par ao vocabulário.
- * - [cite_start]Atualiza o corpus fundindo esse par[cite: 154].
- * * @param texto_corpus Ponteiro para o texto de entrada (será modificado durante o processo).
- * @param alfabeto_tokens Ponteiro para a matriz de tokens (resultado final).
- * [cite_start]@param num_tokens_desejado Critério de paragem (tamanho final do vocabulário)[cite: 155].
- * @return int Retorna 1 se o processo concluir com sucesso, 0 caso contrário.
- * * @note **Complexidade Global:** Depende do número de fusões (K). Aproximadamente O(K * Custo_Procura),
- * o que torna o algoritmo intensivo computacionalmente para textos grandes.
- */
-
+int calcularAlfabetoTokens(MatrizTexto *texto_corpus, MatrizTokens *alfabeto_tokens, int num_tokens_desejado);
 #endif //BPE_H

@@ -241,7 +241,7 @@ int calcularAlfabetoTokens(MatrizTexto *texto_corpus, MatrizTokens *alfabeto_tok
         int freq;
         char *melhor_par = encontrarMelhorPar(listas_corpus, texto_corpus->linhas_usadas, &freq);
 
-        if (melhor_par == NULL || freq <= 1) {
+        if (melhor_par == NULL || freq < 1) {
             if (melhor_par) free(melhor_par);
             printf("Nenhum par frequente encontrado. A parar.\n");
             break; // Não há mais nada para fundir
@@ -264,11 +264,4 @@ int calcularAlfabetoTokens(MatrizTexto *texto_corpus, MatrizTokens *alfabeto_tok
     free(listas_corpus);
 
     return 1;
-}
-
-// Mantemos esta função vazia ou como wrapper caso o .h a exija,
-// mas a lógica real está agora interna no loop acima.
-int aplicarFusaoNoCorpus(MatrizTexto *m_texto, const char *token1, const char *token2) {
-    // Deprecada: A lógica agora acontece via Listas Ligadas dentro de calcularAlfabetoTokens
-    return 0;
 }
