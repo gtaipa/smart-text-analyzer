@@ -44,7 +44,7 @@ char *encontrarParMaisFrequente(MatrizTexto m_texto, MatrizTokens m_tokens, int 
  * @param token1 O primeiro token do par (ex: "a").
  * @param token2 O segundo token do par (ex: "r").
  * @return int Retorna o número total de fusões realizadas, ou -1 em caso de erro.
- * * @note **Complexidade:** O(L), onde L é o comprimento total do texto, pois envolve
+ * * @note **Complexidade:** O(L), onde L é o comprimento total do texto, pois envolve.
  * scanning linear e reconstrução das strings.
  */
 int aplicarFusaoNoCorpus(MatrizTexto *m_texto, const char *token1, const char *token2);
