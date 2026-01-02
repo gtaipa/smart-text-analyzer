@@ -23,6 +23,7 @@ typedef struct TK_TF_NODE {
     int vocab_size;         /**< Tamanho do vocabulário no momento da criação */
 
     struct TK_TF_NODE *proximo;  /**< Ponteiro para o próximo documento na lista */
+    struct TK_TF_NODE *anterior;
 } TK_TF_NODE;
 
 /**
