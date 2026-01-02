@@ -1,0 +1,83 @@
+\doxysection{TK\+\_\+\+TF\+\_\+\+NODE Struct Reference}
+\hypertarget{struct_t_k___t_f___n_o_d_e}{}\label{struct_t_k___t_f___n_o_d_e}\index{TK\_TF\_NODE@{TK\_TF\_NODE}}
+
+
+Estrutura que representa um Documento (Nó da Lista Ligada). Contém a informação textual, a versão tokenizada e vetorial. \mbox{[}R2.\+1\mbox{]} Nome alterado de t\+\_\+doc para \doxylink{struct_t_k___t_f___n_o_d_e}{TK\+\_\+\+TF\+\_\+\+NODE} conforme requisito.  
+
+
+
+
+{\ttfamily \#include $<$gestao\+\_\+documentos.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{struct_t_k___t_f___n_o_d_e_a4e6ae9918646e8bc19c6853df24d61f0}{titulo}}
+\item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{struct_t_k___t_f___n_o_d_e_a8d3d3fbcb71e724b02da7b97355aa7b1}{texto\+\_\+original}}
+\item 
+int \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{struct_t_k___t_f___n_o_d_e_adcb1e4a88a56a4632ba4d64dfe905ac4}{ids\+\_\+tokens}}
+\item 
+int \mbox{\hyperlink{struct_t_k___t_f___n_o_d_e_aea3b1b8a5e34c35cb4b6073752495a1a}{num\+\_\+ids}}
+\item 
+int \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{struct_t_k___t_f___n_o_d_e_af4418af834876c9298fb6eb315fee7d1}{vetor\+\_\+tf}}
+\item 
+int \mbox{\hyperlink{struct_t_k___t_f___n_o_d_e_aa47c8f70dd1f7e8ed4d6c282015f9697}{vocab\+\_\+size}}
+\item 
+struct \mbox{\hyperlink{struct_t_k___t_f___n_o_d_e}{TK\+\_\+\+TF\+\_\+\+NODE}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{struct_t_k___t_f___n_o_d_e_a3ab101092614760a83cc423e459192a7}{proximo}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Estrutura que representa um Documento (Nó da Lista Ligada). Contém a informação textual, a versão tokenizada e vetorial. \mbox{[}R2.\+1\mbox{]} Nome alterado de t\+\_\+doc para \doxylink{struct_t_k___t_f___n_o_d_e}{TK\+\_\+\+TF\+\_\+\+NODE} conforme requisito. 
+
+\label{doc-variable-members}
+\Hypertarget{struct_t_k___t_f___n_o_d_e_doc-variable-members}
+\doxysubsection{Field Documentation}
+\Hypertarget{struct_t_k___t_f___n_o_d_e_adcb1e4a88a56a4632ba4d64dfe905ac4}\index{TK\_TF\_NODE@{TK\_TF\_NODE}!ids\_tokens@{ids\_tokens}}
+\index{ids\_tokens@{ids\_tokens}!TK\_TF\_NODE@{TK\_TF\_NODE}}
+\doxysubsubsection{\texorpdfstring{ids\_tokens}{ids\_tokens}}
+{\footnotesize\ttfamily \label{struct_t_k___t_f___n_o_d_e_adcb1e4a88a56a4632ba4d64dfe905ac4} 
+int\texorpdfstring{$\ast$}{*} ids\+\_\+tokens}
+
+Array de IDs após a tokenização (R1.\+4) \Hypertarget{struct_t_k___t_f___n_o_d_e_aea3b1b8a5e34c35cb4b6073752495a1a}\index{TK\_TF\_NODE@{TK\_TF\_NODE}!num\_ids@{num\_ids}}
+\index{num\_ids@{num\_ids}!TK\_TF\_NODE@{TK\_TF\_NODE}}
+\doxysubsubsection{\texorpdfstring{num\_ids}{num\_ids}}
+{\footnotesize\ttfamily \label{struct_t_k___t_f___n_o_d_e_aea3b1b8a5e34c35cb4b6073752495a1a} 
+int num\+\_\+ids}
+
+Tamanho do array ids\+\_\+tokens \Hypertarget{struct_t_k___t_f___n_o_d_e_a3ab101092614760a83cc423e459192a7}\index{TK\_TF\_NODE@{TK\_TF\_NODE}!proximo@{proximo}}
+\index{proximo@{proximo}!TK\_TF\_NODE@{TK\_TF\_NODE}}
+\doxysubsubsection{\texorpdfstring{proximo}{proximo}}
+{\footnotesize\ttfamily \label{struct_t_k___t_f___n_o_d_e_a3ab101092614760a83cc423e459192a7} 
+struct \mbox{\hyperlink{struct_t_k___t_f___n_o_d_e}{TK\+\_\+\+TF\+\_\+\+NODE}}\texorpdfstring{$\ast$}{*} proximo}
+
+Ponteiro para o próximo documento na lista \Hypertarget{struct_t_k___t_f___n_o_d_e_a8d3d3fbcb71e724b02da7b97355aa7b1}\index{TK\_TF\_NODE@{TK\_TF\_NODE}!texto\_original@{texto\_original}}
+\index{texto\_original@{texto\_original}!TK\_TF\_NODE@{TK\_TF\_NODE}}
+\doxysubsubsection{\texorpdfstring{texto\_original}{texto\_original}}
+{\footnotesize\ttfamily \label{struct_t_k___t_f___n_o_d_e_a8d3d3fbcb71e724b02da7b97355aa7b1} 
+char\texorpdfstring{$\ast$}{*} texto\+\_\+original}
+
+O conteúdo integral do texto \Hypertarget{struct_t_k___t_f___n_o_d_e_a4e6ae9918646e8bc19c6853df24d61f0}\index{TK\_TF\_NODE@{TK\_TF\_NODE}!titulo@{titulo}}
+\index{titulo@{titulo}!TK\_TF\_NODE@{TK\_TF\_NODE}}
+\doxysubsubsection{\texorpdfstring{titulo}{titulo}}
+{\footnotesize\ttfamily \label{struct_t_k___t_f___n_o_d_e_a4e6ae9918646e8bc19c6853df24d61f0} 
+char\texorpdfstring{$\ast$}{*} titulo}
+
+Nome do ficheiro ou título do documento \Hypertarget{struct_t_k___t_f___n_o_d_e_af4418af834876c9298fb6eb315fee7d1}\index{TK\_TF\_NODE@{TK\_TF\_NODE}!vetor\_tf@{vetor\_tf}}
+\index{vetor\_tf@{vetor\_tf}!TK\_TF\_NODE@{TK\_TF\_NODE}}
+\doxysubsubsection{\texorpdfstring{vetor\_tf}{vetor\_tf}}
+{\footnotesize\ttfamily \label{struct_t_k___t_f___n_o_d_e_af4418af834876c9298fb6eb315fee7d1} 
+int\texorpdfstring{$\ast$}{*} vetor\+\_\+tf}
+
+Vetor de frequências (Histograma) (R1.\+5) \Hypertarget{struct_t_k___t_f___n_o_d_e_aa47c8f70dd1f7e8ed4d6c282015f9697}\index{TK\_TF\_NODE@{TK\_TF\_NODE}!vocab\_size@{vocab\_size}}
+\index{vocab\_size@{vocab\_size}!TK\_TF\_NODE@{TK\_TF\_NODE}}
+\doxysubsubsection{\texorpdfstring{vocab\_size}{vocab\_size}}
+{\footnotesize\ttfamily \label{struct_t_k___t_f___n_o_d_e_aa47c8f70dd1f7e8ed4d6c282015f9697} 
+int vocab\+\_\+size}
+
+Tamanho do vocabulário no momento da criação 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{gestao__documentos_8h}{gestao\+\_\+documentos.\+h}}\end{DoxyCompactItemize}

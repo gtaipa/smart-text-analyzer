@@ -1,0 +1,96 @@
+\doxysection{files.\+c File Reference}
+\hypertarget{files_8c}{}\label{files_8c}\index{files.c@{files.c}}
+{\ttfamily \#include "{}files.\+h"{}}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{files_8c_afefe267a981d9b2dc79887f9c9c09ad8}{guardar\+Colecao\+Texto}} (const char \texorpdfstring{$\ast$}{*}nome\+\_\+ficheiro, \mbox{\hyperlink{struct_l_l___t_k___t_f}{LL\+\_\+\+TK\+\_\+\+TF}} lista)
+\begin{DoxyCompactList}\small\item\em Guarda a coleção completa (Vocabulário e Documentos) num ficheiro de texto legível. Formato\+: Lista de tokens, seguida pela lista de documentos com os seus metadados. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_l_l___t_k___t_f}{LL\+\_\+\+TK\+\_\+\+TF}} \mbox{\hyperlink{files_8c_a257d5e6a9d997b4d6f1690c8748e58f4}{carregar\+Colecao\+Texto}} (const char \texorpdfstring{$\ast$}{*}nome\+\_\+ficheiro)
+\begin{DoxyCompactList}\small\item\em Carrega uma coleção a partir de um ficheiro de texto. Lê o vocabulário e os textos, e recria as estruturas dinâmicas em memória (incluindo recalcular IDs e TF). \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{files_8c_a632aa48fd4f9e11158b2c262505461fa}{guardar\+Colecao\+Binaria}} (const char \texorpdfstring{$\ast$}{*}nome\+\_\+ficheiro, \mbox{\hyperlink{struct_l_l___t_k___t_f}{LL\+\_\+\+TK\+\_\+\+TF}} lista)
+\begin{DoxyCompactList}\small\item\em Guarda a coleção completa num ficheiro binário. Mais eficiente que texto\+: guarda a representação exata da memória (tamanhos seguidos de bytes). Inclui\+: Vocabulário, Textos, IDs de Tokens e Vetores TF. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_l_l___t_k___t_f}{LL\+\_\+\+TK\+\_\+\+TF}} \mbox{\hyperlink{files_8c_a544630250c78c567c98d42381f5a1694}{carregar\+Colecao\+Binaria}} (const char \texorpdfstring{$\ast$}{*}nome\+\_\+ficheiro)
+\begin{DoxyCompactList}\small\item\em Lê uma coleção completa de um ficheiro binário. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{files_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{files_8c_a544630250c78c567c98d42381f5a1694}\index{files.c@{files.c}!carregarColecaoBinaria@{carregarColecaoBinaria}}
+\index{carregarColecaoBinaria@{carregarColecaoBinaria}!files.c@{files.c}}
+\doxysubsubsection{\texorpdfstring{carregarColecaoBinaria()}{carregarColecaoBinaria()}}
+{\footnotesize\ttfamily \label{files_8c_a544630250c78c567c98d42381f5a1694} 
+\mbox{\hyperlink{struct_l_l___t_k___t_f}{LL\+\_\+\+TK\+\_\+\+TF}} carregar\+Colecao\+Binaria (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{nome\+\_\+ficheiro}{}\end{DoxyParamCaption})}
+
+
+
+Lê uma coleção completa de um ficheiro binário. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nome\+\_\+ficheiro} & Caminho do ficheiro binário a ler. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{struct_l_l___t_k___t_f}{LL\+\_\+\+TK\+\_\+\+TF} Estrutura carregada em memória. 
+\end{DoxyReturn}
+\Hypertarget{files_8c_a257d5e6a9d997b4d6f1690c8748e58f4}\index{files.c@{files.c}!carregarColecaoTexto@{carregarColecaoTexto}}
+\index{carregarColecaoTexto@{carregarColecaoTexto}!files.c@{files.c}}
+\doxysubsubsection{\texorpdfstring{carregarColecaoTexto()}{carregarColecaoTexto()}}
+{\footnotesize\ttfamily \label{files_8c_a257d5e6a9d997b4d6f1690c8748e58f4} 
+\mbox{\hyperlink{struct_l_l___t_k___t_f}{LL\+\_\+\+TK\+\_\+\+TF}} carregar\+Colecao\+Texto (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{nome\+\_\+ficheiro}{}\end{DoxyParamCaption})}
+
+
+
+Carrega uma coleção a partir de um ficheiro de texto. Lê o vocabulário e os textos, e recria as estruturas dinâmicas em memória (incluindo recalcular IDs e TF). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nome\+\_\+ficheiro} & Caminho do ficheiro a ler. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{struct_l_l___t_k___t_f}{LL\+\_\+\+TK\+\_\+\+TF} Estrutura carregada (deve ser libertada posteriormente). 
+\end{DoxyReturn}
+\Hypertarget{files_8c_a632aa48fd4f9e11158b2c262505461fa}\index{files.c@{files.c}!guardarColecaoBinaria@{guardarColecaoBinaria}}
+\index{guardarColecaoBinaria@{guardarColecaoBinaria}!files.c@{files.c}}
+\doxysubsubsection{\texorpdfstring{guardarColecaoBinaria()}{guardarColecaoBinaria()}}
+{\footnotesize\ttfamily \label{files_8c_a632aa48fd4f9e11158b2c262505461fa} 
+int guardar\+Colecao\+Binaria (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{nome\+\_\+ficheiro}{, }\item[{\mbox{\hyperlink{struct_l_l___t_k___t_f}{LL\+\_\+\+TK\+\_\+\+TF}}}]{lista}{}\end{DoxyParamCaption})}
+
+
+
+Guarda a coleção completa num ficheiro binário. Mais eficiente que texto\+: guarda a representação exata da memória (tamanhos seguidos de bytes). Inclui\+: Vocabulário, Textos, IDs de Tokens e Vetores TF. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nome\+\_\+ficheiro} & Caminho do ficheiro binário (.bin). \\
+\hline
+{\em lista} & A estrutura de dados a persistir (\doxylink{struct_l_l___t_k___t_f}{LL\+\_\+\+TK\+\_\+\+TF}). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int 1 em caso de sucesso, 0 se erro. 
+\end{DoxyReturn}
+\Hypertarget{files_8c_afefe267a981d9b2dc79887f9c9c09ad8}\index{files.c@{files.c}!guardarColecaoTexto@{guardarColecaoTexto}}
+\index{guardarColecaoTexto@{guardarColecaoTexto}!files.c@{files.c}}
+\doxysubsubsection{\texorpdfstring{guardarColecaoTexto()}{guardarColecaoTexto()}}
+{\footnotesize\ttfamily \label{files_8c_afefe267a981d9b2dc79887f9c9c09ad8} 
+int guardar\+Colecao\+Texto (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{nome\+\_\+ficheiro}{, }\item[{\mbox{\hyperlink{struct_l_l___t_k___t_f}{LL\+\_\+\+TK\+\_\+\+TF}}}]{lista}{}\end{DoxyParamCaption})}
+
+
+
+Guarda a coleção completa (Vocabulário e Documentos) num ficheiro de texto legível. Formato\+: Lista de tokens, seguida pela lista de documentos com os seus metadados. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nome\+\_\+ficheiro} & Caminho/\+Nome do ficheiro de destino. \\
+\hline
+{\em lista} & A estrutura contendo os dados a guardar (\doxylink{struct_l_l___t_k___t_f}{LL\+\_\+\+TK\+\_\+\+TF}). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int 1 em caso de sucesso, 0 se houver erro de I/O. 
+\end{DoxyReturn}
