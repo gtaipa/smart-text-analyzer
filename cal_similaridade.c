@@ -15,9 +15,9 @@ static double calcularMagnitude(int *vetor, int tamanhoVocabulario) {
     return sqrt(soma_quadrados);
 }
 
-// =============================================================
+
 //  Funcoes R1.6 (Publicas)
-// =============================================================
+
 
 double calcularProdutoInterno(int *vetorA, int *vetorB, int tamanhoVocabulario) {//soma o produto dos conteudos presentes nas varias posicoes dos vetores
     double soma = 0.0;

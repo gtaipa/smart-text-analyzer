@@ -7,9 +7,9 @@
 #include "gestao_documentos.h"
 #include "manipulacao_matrizes.h"
 
-// =============================================================
+
 //  Funcoes R2.3 - Ficheiros de Texto
-// =============================================================
+
 
 /**
  * @brief Guarda a coleção completa (Vocabulário e Documentos) num ficheiro de texto legível.
@@ -29,9 +29,9 @@ int guardarColecaoTexto(const char *nome_ficheiro, LL_TK_TF lista);
 LL_TK_TF carregarColecaoTexto(const char *nome_ficheiro);
 
 
-// =============================================================
+
 //  Funções R2.4 - Ficheiros Binários
-// =============================================================
+
 
 /**
  * @brief Guarda a coleção completa num ficheiro binário.

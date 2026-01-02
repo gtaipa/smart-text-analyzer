@@ -8,56 +8,64 @@
 #include "gestao_documentos.h"
 #include "files.h"
 
-// ==================================================================
+
 //  TESTES UNITARIOS
-// ==================================================================
 
+// Testa se as estruturas básicas de texto funcionam corretamente
 void testar_estruturas_basicas() {
-    printf("\n=== [Diagnostico] Teste Estruturas Basicas ===\n");
-    MatrizTexto texto = criarMatrizTexto(2);
-    adicionarLinha(&texto, "teste 1");
-    if (texto.linhas_usadas == 1) printf("[OK] Adicionar linha funciona.\n");
-    libertarMatriz(texto);
+    printf("\n=== [Diagnostico] Teste Estruturas Basicas ===\n");// Cabeçalho visual para identificar o teste
+    MatrizTexto texto = criarMatrizTexto(2);// Cria uma matriz de texto com capacidade inicial para 2 linhas
+    adicionarLinha(&texto, "teste 1");// Adiciona uma linha de texto à matriz
+    if (texto.linhas_usadas == 1) printf("[OK] Adicionar linha funciona.\n");// Verifica se a linha foi realmente adicionada
+    libertarMatriz(texto);// Liberta a memória usada pela matriz de texto
 }
-
+// Testa se a tokenização escolhe sempre o maior token possível (greedy)
 void testar_tokenizacao_greedy() {
     printf("\n=== [Diagnostico] Teste Tokenizacao Greedy ===\n");
-    MatrizTokens t = criarMatrizTokens(5);
+    MatrizTokens t = criarMatrizTokens(5); // Cria um vocabulário pequeno para o teste
+    // Adiciona tokens de diferentes tamanhos
     adicionarToken(&t, "uni");
     adicionarToken(&t, "versidade");
     adicionarToken(&t, "universidade");
 
+
+    // Tokeniza a palavra "universidade"
     int n;
     int *ids = tokenizarFrase("universidade", t, &n);
 
+
+    // Espera-se que escolha apenas o token "universidade"
+    // (ID 2), em vez de dividir em partes menores
     if (n == 1 && ids[0] == 2) {
         printf("[OK] O sistema escolheu o maior token possivel.\n");
     } else {
         printf("[FALHA] O sistema nao foi ganancioso (Greedy).\n");
     }
+    // Liberta memória usada no teste
     free(ids);
     libertarTokens(t);
 }
 
-// ==================================================================
+
 //  MOTOR DE TESTE GENERICO
-// ==================================================================
+
+
 
 void executar_demonstracao_completa(char *nome_teste, char **frases_treino, int n_treino, char *frase_pesquisa, int n_tokens_alvo) {
     printf("\n\n");
-    printf("##################################################\n");
     printf("### CENARIO: %s\n", nome_teste);
-    printf("##################################################\n");
+
 
     // 1. Criar o Corpus
     MatrizTexto corpus = criarMatrizTexto(10);
+    // Adiciona todas as frases de treino ao corpus
     for(int i=0; i<n_treino; i++) {
         adicionarLinha(&corpus, frases_treino[i]);
     }
 
     // 2. Aprender Vocabulario (BPE)
     printf(">> 1. A aprender padroes no texto (BPE)...\n");
-    MatrizTokens vocab = criarMatrizTokens(n_tokens_alvo);
+    MatrizTokens vocab = criarMatrizTokens(n_tokens_alvo);// Cria o vocabulário com o número alvo de tokens
 
     // Executa o BPE
     calcularAlfabetoTokens(&corpus, &vocab, n_tokens_alvo);
@@ -73,7 +81,8 @@ void executar_demonstracao_completa(char *nome_teste, char **frases_treino, int 
 
     // 3. Criar Base de Dados
     printf(">> 2. A indexar documentos e calcular frequencias (TF)...\n");
-    LL_TK_TF bd = criarListaDocumentos(&vocab);
+    LL_TK_TF bd = criarListaDocumentos(&vocab);// Cria a lista ligada de documentos
+    // Adiciona cada frase como um documento
     for(int i=0; i<n_treino; i++) {
         char titulo[20];
         sprintf(titulo, "Doc_%d", i+1);
@@ -111,12 +120,16 @@ void executar_demonstracao_completa(char *nome_teste, char **frases_treino, int 
     libertarListaDocumentos(&bd);
 }
 
-// ==================================================================
+
 //  MAIN
-// ==================================================================
+
 
 int main() {
+    // Testes básicos para garantir que as estruturas
+    // fundamentais (matrizes, listas, etc.) funcionam corretamente
     testar_estruturas_basicas();
+    // Testa se a tokenização é realmente "greedy",
+    // ou seja, se escolhe sempre o maior token possível
     testar_tokenizacao_greedy();
 
     // 1. O Exemplo do PDF (Ingles)
@@ -136,6 +149,6 @@ int main() {
     };
     executar_demonstracao_completa("Teste Robustez (Portugues)", frases_pt, 3, "gosto de programar", 50);
 
-    printf("\n=== TODOS OS TESTES CONCLUIDOS ===\n");
+    printf("\n=== TODOS OS TESTES CONCLUIDOS ===\n");// Mensagem final
     return 0;
 }

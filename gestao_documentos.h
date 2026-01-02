@@ -37,9 +37,9 @@ typedef struct {
 } LL_TK_TF;
 
 
-// =============================================================
+
 //  Funções de Gestão de Documentos
-// =============================================================
+
 
 /**
  * @brief Inicializa uma lista de documentos vazia.
