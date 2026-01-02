@@ -1,8 +1,0 @@
-var searchData=
-[
-  ['adicionardocumentolista_0',['adicionarDocumentoLista',['../gestao__documentos_8c.html#a0125cec3c2e9ca159acc390ac9e7caf8',1,'adicionarDocumentoLista(t_lista_docs *lista, const char *titulo, const char *texto_original):&#160;gestao_documentos.c'],['../gestao__documentos_8h.html#a0125cec3c2e9ca159acc390ac9e7caf8',1,'adicionarDocumentoLista(t_lista_docs *lista, const char *titulo, const char *texto_original):&#160;gestao_documentos.c']]],
-  ['adicionarlinha_1',['adicionarLinha',['../manipulacao__matrizes_8c.html#ae4fff085e6451df051591ed53091a6e1',1,'adicionarLinha(MatrizTexto *m, const char *frase):&#160;manipulacao_matrizes.c'],['../manipulacao__matrizes_8h.html#ae4fff085e6451df051591ed53091a6e1',1,'adicionarLinha(MatrizTexto *m, const char *frase):&#160;manipulacao_matrizes.c']]],
-  ['adicionartoken_2',['adicionarToken',['../manipulacao__matrizes_8c.html#a83b1795222fe6963cc292ed600fd4e52',1,'adicionarToken(MatrizTokens *t, const char *token):&#160;manipulacao_matrizes.c'],['../manipulacao__matrizes_8h.html#a83b1795222fe6963cc292ed600fd4e52',1,'adicionarToken(MatrizTokens *t, const char *token):&#160;manipulacao_matrizes.c']]],
-  ['aplicarfusaonocorpus_3',['aplicarFusaoNoCorpus',['../bpe_8c.html#a5022d836eb16ede1420537a767eb64d4',1,'aplicarFusaoNoCorpus(MatrizTexto *m_texto, const char *token1, const char *token2):&#160;bpe.c'],['../bpe_8h.html#a5022d836eb16ede1420537a767eb64d4',1,'aplicarFusaoNoCorpus(MatrizTexto *m_texto, const char *token1, const char *token2):&#160;bpe.c']]],
-  ['architecture_5fid_4',['ARCHITECTURE_ID',['../_c_make_c_compiler_id_8c.html#aba35d0d200deaeb06aee95ca297acb28',1,'CMakeCCompilerId.c']]]
-];

@@ -1,0 +1,200 @@
+\doxysection{gestao\+\_\+documentos.\+c File Reference}
+\hypertarget{gestao__documentos_8c}{}\label{gestao__documentos_8c}\index{gestao\_documentos.c@{gestao\_documentos.c}}
+{\ttfamily \#include "{}gestao\+\_\+documentos.\+h"{}}\newline
+{\ttfamily \#include "{}files.\+h"{}}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{gestao__documentos_8c_ac2fbd2a6f562999348abb84613fb0436}{duplicar\+String}} (const char \texorpdfstring{$\ast$}{*}s)
+\item 
+\mbox{\hyperlink{struct_l_l___t_k___t_f}{LL\+\_\+\+TK\+\_\+\+TF}} \mbox{\hyperlink{gestao__documentos_8c_a332cbfcdf025e4ea502b989cd8870cbe}{criar\+Lista\+Documentos}} (\mbox{\hyperlink{struct_matriz_tokens}{Matriz\+Tokens}} \texorpdfstring{$\ast$}{*}vocab)
+\begin{DoxyCompactList}\small\item\em Inicializa uma lista de documentos vazia. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{gestao__documentos_8c_a4eb6663de816ee7a57e7352547b0aeed}{adicionar\+Documento\+Lista}} (\mbox{\hyperlink{struct_l_l___t_k___t_f}{LL\+\_\+\+TK\+\_\+\+TF}} \texorpdfstring{$\ast$}{*}lista, const char \texorpdfstring{$\ast$}{*}titulo, const char \texorpdfstring{$\ast$}{*}texto\+\_\+original)
+\begin{DoxyCompactList}\small\item\em Adiciona um documento ao final da lista. Esta função chama internamente as rotinas de tokenização e vetorização. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{gestao__documentos_8c_aa7c81a13b025012c36bf8d544b483559}{listar\+Documentos}} (\mbox{\hyperlink{struct_l_l___t_k___t_f}{LL\+\_\+\+TK\+\_\+\+TF}} lista)
+\begin{DoxyCompactList}\small\item\em Percorre a lista e imprime os dados básicos de cada documento. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{gestao__documentos_8c_a0afb68de67de622881e41297151bd4bd}{libertar\+Lista\+Documentos}} (\mbox{\hyperlink{struct_l_l___t_k___t_f}{LL\+\_\+\+TK\+\_\+\+TF}} \texorpdfstring{$\ast$}{*}lista)
+\begin{DoxyCompactList}\small\item\em Liberta toda a memória da lista (incluindo todos os nós e arrays internos). \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_t_k___t_f___n_o_d_e}{TK\+\_\+\+TF\+\_\+\+NODE}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{gestao__documentos_8c_ae60011f1dcf164863e3eeeb157136c43}{obter\+Documento\+Por\+Indice}} (\mbox{\hyperlink{struct_l_l___t_k___t_f}{LL\+\_\+\+TK\+\_\+\+TF}} lista, int indice)
+\begin{DoxyCompactList}\small\item\em Retorna um ponteiro para o documento num determinado índice. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{gestao__documentos_8c_a1f0052d7d6175dfedaf5d484316da80b}{inserir\+Documento\+No\+Indice}} (\mbox{\hyperlink{struct_l_l___t_k___t_f}{LL\+\_\+\+TK\+\_\+\+TF}} \texorpdfstring{$\ast$}{*}lista, const char \texorpdfstring{$\ast$}{*}titulo, const char \texorpdfstring{$\ast$}{*}texto, int indice)
+\begin{DoxyCompactList}\small\item\em Insere um novo documento numa posição específica da lista. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{gestao__documentos_8c_acac159e5e0defef2c1b05eada338c0ce}{remover\+Documento\+Por\+Indice}} (\mbox{\hyperlink{struct_l_l___t_k___t_f}{LL\+\_\+\+TK\+\_\+\+TF}} \texorpdfstring{$\ast$}{*}lista, int indice)
+\begin{DoxyCompactList}\small\item\em Remove e liberta a memória de um documento numa posição específica. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{gestao__documentos_8c_a64de08b4e635af52a46107697a96c932}{pesquisar\+Documentos\+Por\+Token\+ID}} (\mbox{\hyperlink{struct_l_l___t_k___t_f}{LL\+\_\+\+TK\+\_\+\+TF}} lista, int token\+\_\+id)
+\begin{DoxyCompactList}\small\item\em Pesquisa em toda a lista quais os documentos que contêm um determinado Token ID. Utiliza o vetor TF para verificar se a frequência é \texorpdfstring{$>$}{>} 0. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{gestao__documentos_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{gestao__documentos_8c_a4eb6663de816ee7a57e7352547b0aeed}\index{gestao\_documentos.c@{gestao\_documentos.c}!adicionarDocumentoLista@{adicionarDocumentoLista}}
+\index{adicionarDocumentoLista@{adicionarDocumentoLista}!gestao\_documentos.c@{gestao\_documentos.c}}
+\doxysubsubsection{\texorpdfstring{adicionarDocumentoLista()}{adicionarDocumentoLista()}}
+{\footnotesize\ttfamily \label{gestao__documentos_8c_a4eb6663de816ee7a57e7352547b0aeed} 
+int adicionar\+Documento\+Lista (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_l_l___t_k___t_f}{LL\+\_\+\+TK\+\_\+\+TF}} \texorpdfstring{$\ast$}{*}}]{lista}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{titulo}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{texto\+\_\+original}{}\end{DoxyParamCaption})}
+
+
+
+Adiciona um documento ao final da lista. Esta função chama internamente as rotinas de tokenização e vetorização. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lista} & Ponteiro para a lista. \\
+\hline
+{\em titulo} & Título do documento. \\
+\hline
+{\em texto\+\_\+original} & Conteúdo do documento. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int 1 se sucesso, 0 se erro. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+{\bfseries{Complexidade\+:}} O(\+N) para percorrer a lista até ao fim + custo da tokenização. 
+\end{DoxyNote}
+\Hypertarget{gestao__documentos_8c_a332cbfcdf025e4ea502b989cd8870cbe}\index{gestao\_documentos.c@{gestao\_documentos.c}!criarListaDocumentos@{criarListaDocumentos}}
+\index{criarListaDocumentos@{criarListaDocumentos}!gestao\_documentos.c@{gestao\_documentos.c}}
+\doxysubsubsection{\texorpdfstring{criarListaDocumentos()}{criarListaDocumentos()}}
+{\footnotesize\ttfamily \label{gestao__documentos_8c_a332cbfcdf025e4ea502b989cd8870cbe} 
+\mbox{\hyperlink{struct_l_l___t_k___t_f}{LL\+\_\+\+TK\+\_\+\+TF}} criar\+Lista\+Documentos (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_matriz_tokens}{Matriz\+Tokens}} \texorpdfstring{$\ast$}{*}}]{vocab}{}\end{DoxyParamCaption})}
+
+
+
+Inicializa uma lista de documentos vazia. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vocab} & Ponteiro para o vocabulário que será usado na tokenização dos documentos. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{struct_l_l___t_k___t_f}{LL\+\_\+\+TK\+\_\+\+TF} Lista inicializada. 
+\end{DoxyReturn}
+\Hypertarget{gestao__documentos_8c_ac2fbd2a6f562999348abb84613fb0436}\index{gestao\_documentos.c@{gestao\_documentos.c}!duplicarString@{duplicarString}}
+\index{duplicarString@{duplicarString}!gestao\_documentos.c@{gestao\_documentos.c}}
+\doxysubsubsection{\texorpdfstring{duplicarString()}{duplicarString()}}
+{\footnotesize\ttfamily \label{gestao__documentos_8c_ac2fbd2a6f562999348abb84613fb0436} 
+char \texorpdfstring{$\ast$}{*} duplicar\+String (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{s}{}\end{DoxyParamCaption})}
+
+\Hypertarget{gestao__documentos_8c_a1f0052d7d6175dfedaf5d484316da80b}\index{gestao\_documentos.c@{gestao\_documentos.c}!inserirDocumentoNoIndice@{inserirDocumentoNoIndice}}
+\index{inserirDocumentoNoIndice@{inserirDocumentoNoIndice}!gestao\_documentos.c@{gestao\_documentos.c}}
+\doxysubsubsection{\texorpdfstring{inserirDocumentoNoIndice()}{inserirDocumentoNoIndice()}}
+{\footnotesize\ttfamily \label{gestao__documentos_8c_a1f0052d7d6175dfedaf5d484316da80b} 
+int inserir\+Documento\+No\+Indice (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_l_l___t_k___t_f}{LL\+\_\+\+TK\+\_\+\+TF}} \texorpdfstring{$\ast$}{*}}]{lista}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{titulo}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{texto}{, }\item[{int}]{indice}{}\end{DoxyParamCaption})}
+
+
+
+Insere um novo documento numa posição específica da lista. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lista} & Ponteiro para a lista. \\
+\hline
+{\em titulo} & Título do novo documento. \\
+\hline
+{\em texto} & Conteúdo do novo documento. \\
+\hline
+{\em indice} & Posição onde inserir (0 = início, N = fim). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int 1 se sucesso, 0 se erro ou índice inválido. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+{\bfseries{Complexidade\+:}} O(\+K) para chegar à posição de inserção. 
+\end{DoxyNote}
+\Hypertarget{gestao__documentos_8c_a0afb68de67de622881e41297151bd4bd}\index{gestao\_documentos.c@{gestao\_documentos.c}!libertarListaDocumentos@{libertarListaDocumentos}}
+\index{libertarListaDocumentos@{libertarListaDocumentos}!gestao\_documentos.c@{gestao\_documentos.c}}
+\doxysubsubsection{\texorpdfstring{libertarListaDocumentos()}{libertarListaDocumentos()}}
+{\footnotesize\ttfamily \label{gestao__documentos_8c_a0afb68de67de622881e41297151bd4bd} 
+void libertar\+Lista\+Documentos (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_l_l___t_k___t_f}{LL\+\_\+\+TK\+\_\+\+TF}} \texorpdfstring{$\ast$}{*}}]{lista}{}\end{DoxyParamCaption})}
+
+
+
+Liberta toda a memória da lista (incluindo todos os nós e arrays internos). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lista} & Ponteiro para a lista a destruir. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{gestao__documentos_8c_aa7c81a13b025012c36bf8d544b483559}\index{gestao\_documentos.c@{gestao\_documentos.c}!listarDocumentos@{listarDocumentos}}
+\index{listarDocumentos@{listarDocumentos}!gestao\_documentos.c@{gestao\_documentos.c}}
+\doxysubsubsection{\texorpdfstring{listarDocumentos()}{listarDocumentos()}}
+{\footnotesize\ttfamily \label{gestao__documentos_8c_aa7c81a13b025012c36bf8d544b483559} 
+void listar\+Documentos (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_l_l___t_k___t_f}{LL\+\_\+\+TK\+\_\+\+TF}}}]{lista}{}\end{DoxyParamCaption})}
+
+
+
+Percorre a lista e imprime os dados básicos de cada documento. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lista} & A lista a imprimir. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{gestao__documentos_8c_ae60011f1dcf164863e3eeeb157136c43}\index{gestao\_documentos.c@{gestao\_documentos.c}!obterDocumentoPorIndice@{obterDocumentoPorIndice}}
+\index{obterDocumentoPorIndice@{obterDocumentoPorIndice}!gestao\_documentos.c@{gestao\_documentos.c}}
+\doxysubsubsection{\texorpdfstring{obterDocumentoPorIndice()}{obterDocumentoPorIndice()}}
+{\footnotesize\ttfamily \label{gestao__documentos_8c_ae60011f1dcf164863e3eeeb157136c43} 
+\mbox{\hyperlink{struct_t_k___t_f___n_o_d_e}{TK\+\_\+\+TF\+\_\+\+NODE}} \texorpdfstring{$\ast$}{*} obter\+Documento\+Por\+Indice (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_l_l___t_k___t_f}{LL\+\_\+\+TK\+\_\+\+TF}}}]{lista}{, }\item[{int}]{indice}{}\end{DoxyParamCaption})}
+
+
+
+Retorna um ponteiro para o documento num determinado índice. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lista} & A lista de documentos. \\
+\hline
+{\em indice} & A posição desejada (base 0). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+TK\+\_\+\+TF\+\_\+\+NODE\texorpdfstring{$\ast$}{*} Ponteiro para o nó ou NULL se o índice for inválido. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+{\bfseries{Complexidade\+:}} O(\+K), onde K é o índice solicitado (acesso sequencial). 
+\end{DoxyNote}
+\Hypertarget{gestao__documentos_8c_a64de08b4e635af52a46107697a96c932}\index{gestao\_documentos.c@{gestao\_documentos.c}!pesquisarDocumentosPorTokenID@{pesquisarDocumentosPorTokenID}}
+\index{pesquisarDocumentosPorTokenID@{pesquisarDocumentosPorTokenID}!gestao\_documentos.c@{gestao\_documentos.c}}
+\doxysubsubsection{\texorpdfstring{pesquisarDocumentosPorTokenID()}{pesquisarDocumentosPorTokenID()}}
+{\footnotesize\ttfamily \label{gestao__documentos_8c_a64de08b4e635af52a46107697a96c932} 
+void pesquisar\+Documentos\+Por\+Token\+ID (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_l_l___t_k___t_f}{LL\+\_\+\+TK\+\_\+\+TF}}}]{lista}{, }\item[{int}]{token\+\_\+id}{}\end{DoxyParamCaption})}
+
+
+
+Pesquisa em toda a lista quais os documentos que contêm um determinado Token ID. Utiliza o vetor TF para verificar se a frequência é \texorpdfstring{$>$}{>} 0. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lista} & A lista de documentos. \\
+\hline
+{\em token\+\_\+id} & O ID do token a pesquisar. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+{\bfseries{Complexidade\+:}} O(\+N), onde N é o número de documentos na lista. 
+\end{DoxyNote}
+\Hypertarget{gestao__documentos_8c_acac159e5e0defef2c1b05eada338c0ce}\index{gestao\_documentos.c@{gestao\_documentos.c}!removerDocumentoPorIndice@{removerDocumentoPorIndice}}
+\index{removerDocumentoPorIndice@{removerDocumentoPorIndice}!gestao\_documentos.c@{gestao\_documentos.c}}
+\doxysubsubsection{\texorpdfstring{removerDocumentoPorIndice()}{removerDocumentoPorIndice()}}
+{\footnotesize\ttfamily \label{gestao__documentos_8c_acac159e5e0defef2c1b05eada338c0ce} 
+int remover\+Documento\+Por\+Indice (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_l_l___t_k___t_f}{LL\+\_\+\+TK\+\_\+\+TF}} \texorpdfstring{$\ast$}{*}}]{lista}{, }\item[{int}]{indice}{}\end{DoxyParamCaption})}
+
+
+
+Remove e liberta a memória de um documento numa posição específica. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lista} & Ponteiro para a lista. \\
+\hline
+{\em indice} & Índice do documento a remover. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int 1 se sucesso, 0 se erro. 
+\end{DoxyReturn}
