@@ -6,9 +6,8 @@
 #include "bpe.h"
 #include "vetorizacao.h"
 
-// =============================================================
 //  Funcoes R1.6 (Similaridade)
-// =============================================================
+
 
 /**
  * @brief Calcula o Produto Interno (Dot Product) entre dois vetores TF.

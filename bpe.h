@@ -3,9 +3,9 @@
 
 #include "manipulacao_matrizes.h"
 
-// =============================================================
+
 //  Funções R1.3 (BPE - Byte Pair Encoding)
-// =============================================================
+
 
 /**
  * @brief Inicializa o alfabeto com todos os caracteres únicos presentes no texto.

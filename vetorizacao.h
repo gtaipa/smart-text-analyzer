@@ -7,10 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-// =============================================================
 //  Funcoes R1.4 (Tokenizacao)
-// =============================================================
-
 /**
  * @brief Converte uma string numa sequência de IDs de tokens usando "Greedy Longest-Match".
  * Percorre a frase e, em cada posição, tenta encontrar o maior token possível do vocabulário
@@ -24,9 +21,7 @@
  */
 int* tokenizarFrase(const char *frase, MatrizTokens tokens, int *n_ids);
 
-// =============================================================
 //  Funcoes R1.5 (Vetorizacao TF)
-// =============================================================
 
 /**
  * @brief Calcula as frequências absolutas de cada token num corpus inteiro.

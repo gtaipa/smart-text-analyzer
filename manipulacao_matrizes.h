@@ -25,9 +25,9 @@ typedef struct {
     int capacidade;     /**< Capacidade total alocada */
 } MatrizTokens;
 
-// =============================================================
+
 //  Funcoes R1.1 e R1.2 - MatrizTexto
-// =============================================================
+
 
 /**
  * @brief Cria uma nova matriz de texto com uma capacidade inicial.
@@ -96,9 +96,9 @@ int removerLinha(MatrizTexto *m, int indice);
  */
 int removerLinhaPorConteudo(MatrizTexto *m, const char *frase);
 
-// =============================================================
+
 //  Funcoes R1.1 e R1.2 - MatrizTokens
-// =============================================================
+
 
 /**
  * @brief Cria uma matriz de tokens (Vocabulário).

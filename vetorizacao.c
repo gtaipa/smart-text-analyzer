@@ -3,9 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-// =============================================================
 //  Requisito 1.4: Tokenizacao das frases
-// =============================================================
 
 // O objetivo desta funcao e transformar uma frase (texto) numa lista de numeros (IDs).
 int *tokenizarFrase(const char *frase, MatrizTokens tokens, int *n_ids)
@@ -105,9 +103,8 @@ int *tokenizarFrase(const char *frase, MatrizTokens tokens, int *n_ids)
     return ids;
 }
 
-// =============================================================
 //  Requisito 1.5 - Estatisticas e Vetores
-// =============================================================
+
 
 int *calcularFrequenciaTokens(MatrizTexto m_texto, MatrizTokens m_tokens, int *num_frequencias_out)
 {

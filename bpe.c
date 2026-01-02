@@ -3,11 +3,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-// =========================================================
-// ESTRUTURAS DE DADOS INTERNAS (Privadas ao BPE)
-// =========================================================
 
-// Um nó representa um token na frase (ex: "c", "a", "t")
+// ESTRUTURAS DE DADOS INTERNAS (Privadas ao BPE)
+
+
+// Um nó representa um token na frase ( "c", "a", "t")
 typedef struct TokenNode {
     char *token;
     struct TokenNode *next;
@@ -29,9 +29,10 @@ typedef struct ParFreq {
 
 #define HASH_SIZE 2003 // Primo maior para menos colisões
 
-// =========================================================
+
 // FUNÇÕES AUXILIARES (Gestão de Listas e Hash)
-// =========================================================
+
+
 
 // Função Hash DJB2 (Eficiente para strings)
 static unsigned int hash_func(const char *str) {
@@ -53,7 +54,7 @@ static FraseLista converterStringParaLista(char *linha) {
         novo->token = (char*)malloc(2 * sizeof(char));
         novo->token[0] = linha[i];
         novo->token[1] = '\0';
-        
+
         novo->next = NULL;
         novo->prev = lista.tail;
 
@@ -80,14 +81,14 @@ static void libertarLista(FraseLista *lista) {
     lista->tail = NULL;
 }
 
-// =========================================================
+
 // IMPLEMENTAÇÃO LÓGICA BPE
-// =========================================================
+
 
 // Passo 1: Inicializa o alfabeto com caracteres únicos
 int inicializarTokensUnicos(MatrizTexto m_texto, MatrizTokens *m_tokens) {
     unsigned char vistos[256] = {0};
-    char token_str[2]; 
+    char token_str[2];
 
     for (int i = 0; i < m_texto.linhas_usadas; i++) {
         char *linha = m_texto.linhas[i];
@@ -114,7 +115,7 @@ static char *encontrarMelhorPar(FraseLista *corpus, int qtd_linhas, int *freq_ou
     // Iterar sobre todas as frases (listas ligadas)
     for (int i = 0; i < qtd_linhas; i++) {
         TokenNode *atual = corpus[i].head;
-        
+
         // Iterar sobre os tokens da frase: atual + proximo
         while (atual != NULL && atual->next != NULL) {
             char buffer[128];
@@ -122,7 +123,7 @@ static char *encontrarMelhorPar(FraseLista *corpus, int qtd_linhas, int *freq_ou
             snprintf(buffer, sizeof(buffer), "%s%s", atual->token, atual->next->token);
 
             unsigned int idx = hash_func(buffer);
-            
+
             // Lógica Hash Table (Procura ou Insere)
             ParFreq *no = hash_table[idx];
             ParFreq *ant = NULL;
@@ -148,7 +149,7 @@ static char *encontrarMelhorPar(FraseLista *corpus, int qtd_linhas, int *freq_ou
                 strcpy(novo->par, buffer);
                 novo->frequencia = 1;
                 novo->proximo = NULL;
-                
+
                 if (ant) ant->proximo = novo;
                 else hash_table[idx] = novo;
 
@@ -189,16 +190,16 @@ static void fundirParNoCorpus(FraseLista *corpus, int qtd_linhas, const char *pa
             // Verifica se este par é o vencedor
             if (strcmp(buffer, par_alvo) == 0) {
                 // FUNDIR!
-                
-                // 1. Atualizar texto do nó atual
+
+                // 1. Atualiza o texto do nó atual
                 char *novo_texto = strdup(buffer);
                 free(atual->token);
                 atual->token = novo_texto;
 
-                // 2. Remover o nó seguinte
+                // 2. Remove o nó seguinte
                 TokenNode *para_apagar = atual->next;
                 atual->next = para_apagar->next;
-                
+
                 if (para_apagar->next) {
                     para_apagar->next->prev = atual;
                 } else {
@@ -208,26 +209,26 @@ static void fundirParNoCorpus(FraseLista *corpus, int qtd_linhas, const char *pa
                 free(para_apagar->token);
                 free(para_apagar);
 
-                // Não avançamos 'atual' imediatamente para evitar double merge
-                // Mas avançamos uma vez para não ficar preso se a lógica exigir
+                // Não avança 'atual' imediatamente para evitar double merge
+                // Mas avança uma vez para não ficar preso se a lógica exigir
             }
             atual = atual->next;
         }
     }
 }
 
-// =========================================================
+
 // FUNÇÃO PRINCIPAL (A que o main chama)
-// =========================================================
+
 
 int calcularAlfabetoTokens(MatrizTexto *texto_corpus, MatrizTokens *alfabeto_tokens, int num_tokens_desejado) {
-    
+
     // 1. Inicializar tokens básicos (a, b, c...)
     if (!inicializarTokensUnicos(*texto_corpus, alfabeto_tokens)) {
         return 0;
     }
 
-    // 2. Converter Texto Bruto para Listas Ligadas (para manipulação fácil) 
+    // 2. Converter Texto Bruto para Listas Ligadas (para manipulação fácil)
     // Isto cria a estrutura S mencionada no PDF
     FraseLista *listas_corpus = malloc(sizeof(FraseLista) * texto_corpus->linhas_usadas);
     for (int i = 0; i < texto_corpus->linhas_usadas; i++) {
@@ -249,7 +250,7 @@ int calcularAlfabetoTokens(MatrizTexto *texto_corpus, MatrizTokens *alfabeto_tok
 
         // Adicionar ao vocabulário
         adicionarToken(alfabeto_tokens, melhor_par);
-        // printf("Fusao: '%s' (freq: %d)\n", melhor_par, freq); // Debug opcional
+
 
         // Aplicar a fusão nas listas ligadas
         fundirParNoCorpus(listas_corpus, texto_corpus->linhas_usadas, melhor_par);
