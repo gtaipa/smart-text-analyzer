@@ -18,7 +18,15 @@ static double calcularMagnitude(int *vetor, int tamanhoVocabulario) {
 
 //  Funcoes R1.6 (Publicas)
 
-
+/**
+ * @brief Calcula o Produto Interno (Dot Product) entre dois vetores TF.
+ * Soma do produto dos elementos correspondentes: sum(A[i] * B[i]).
+ * @param vetorA Primeiro vetor.
+ * @param vetorB Segundo vetor.
+ * @param tamanhoVocabulario Dimensão dos vetores.
+ * @return double Resultado do produto interno.
+ * @note **Complexidade:** O(N), onde N é o tamanho do vocabulário.
+ */
 double calcularProdutoInterno(int *vetorA, int *vetorB, int tamanhoVocabulario) {//soma o produto dos conteudos presentes nas varias posicoes dos vetores
     double soma = 0.0;
     for (int i = 0; i < tamanhoVocabulario; i++) {
@@ -28,6 +36,16 @@ double calcularProdutoInterno(int *vetorA, int *vetorB, int tamanhoVocabulario) 
 }
 
 
+/**
+ * @brief Calcula a Similaridade de Cosseno entre dois vetores TF.
+ * Fórmula: (A . B) / (||A|| * ||B||).
+ * Mede o cosseno do ângulo entre dois vetores num espaço multidimensional.
+ * @param vetorA Primeiro vetor.
+ * @param vetorB Segundo vetor.
+ * @param tamanhoVocabulario Dimensão dos vetores.
+ * @return double Valor entre 0.0 (ortogonais/diferentes) e 1.0 (idênticos em direção).
+ * @note **Complexidade:** O(N), percorre os vetores linearmente para calcular normas e produto.
+ */
 double calcularSimilaridadeCosseno(int *vetorA, int *vetorB, int tamanhoVocabulario) {//usamos as funcoes anteriores para simplificar o processo
     double produto_interno = calcularProdutoInterno(vetorA, vetorB, tamanhoVocabulario);
     double magnitudeA = calcularMagnitude(vetorA, tamanhoVocabulario);

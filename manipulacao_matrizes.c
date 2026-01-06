@@ -1,6 +1,12 @@
 #include "manipulacao_matrizes.h"
 
 //  Funcoes auxiliares de texto (R1.1, R1.2)
+
+/**
+ * @brief Cria uma nova matriz de texto com uma capacidade inicial.
+ * @param capacidade_inicial Tamanho inicial do array dinâmico.
+ * @return MatrizTexto Estrutura inicializada.
+ */
 MatrizTexto criarMatrizTexto(int capacidade_inicial) {
     MatrizTexto m;//criamos uma variavel m do tipo Matriz texto,que contem(linhas,capacidade,linhas_usadas)
     m.linhas = malloc(capacidade_inicial * sizeof(char*));//estamos a alocar espaço para os endereços das frases
@@ -13,6 +19,14 @@ MatrizTexto criarMatrizTexto(int capacidade_inicial) {
     return m;//retornamos a estrutura ja criada
 }
 
+/**
+ * @brief Redimensiona a matriz de texto quando esta fica cheia.
+ * Utiliza `realloc` para aumentar a capacidade do array de ponteiros.
+ * @param m Ponteiro para a matriz a redimensionar.
+ * @param nova_capacidade O novo tamanho total desejado.
+ * @return int 1 em caso de sucesso, 0 se falhar a alocação de memória.
+ * @note **Complexidade:** O(N) onde N é o número de linhas, devido à cópia de ponteiros pelo realloc.
+ */
 int redimensionarMatriz(MatrizTexto *m, int nova_capacidade) {//usamos *m porque queremos alterar a funcao no main, e nao uma copia de m
     char **novas_linhas = realloc(m->linhas, nova_capacidade * sizeof(char*));//verifica se ha espaço,se houver estica o bloco mantendo o endereço, se nao procura um lugar na ram onde caiba
     if (novas_linhas == NULL) {//pode nao haver espaço, criamos novas linhas para caso nao dê nao perdemos as linhas todas
@@ -24,6 +38,14 @@ int redimensionarMatriz(MatrizTexto *m, int nova_capacidade) {//usamos *m porque
     return 1;
 }
 
+/**
+ * @brief Adiciona uma nova frase à matriz.
+ * Se a matriz estiver cheia, invoca automaticamente o redimensionamento.
+ * @param m Ponteiro para a matriz.
+ * @param frase A string a adicionar (será feita uma cópia dinâmica com strdup/malloc).
+ * @return int 1 se sucesso, 0 se erro.
+ * @note **Complexidade:** O(1) amortizado (devido ao redimensionamento ocasional).
+ */
 int adicionarLinha(MatrizTexto *m, const char *frase) {
 
     if (m->linhas_usadas == m->capacidade) {
@@ -54,6 +76,10 @@ int adicionarLinha(MatrizTexto *m, const char *frase) {
     return 1;
 }
 
+/**
+ * @brief Imprime todas as linhas armazenadas na consola.
+ * @param m A matriz a listar.
+ */
 void listarMatriz(MatrizTexto m) {//funcao simples para listar a matriz ao utilizador
     printf("\nMatriz contem %d linhas:\n", m.linhas_usadas);
     for (int i = 0; i < m.linhas_usadas; i++) {
@@ -61,6 +87,11 @@ void listarMatriz(MatrizTexto m) {//funcao simples para listar a matriz ao utili
     }
 }
 
+/**
+ * @brief Liberta toda a memória associada à matriz.
+ * Percorre cada linha libertando a string e, no fim, liberta o array de ponteiros.
+ * @param m A matriz a destruir.
+ */
 void libertarMatriz(MatrizTexto m) {
     if (m.linhas != NULL) {// limpa o conteudo da matriz ou seja as frases
         for (int i = 0; i < m.linhas_usadas; i++) {
@@ -71,6 +102,13 @@ void libertarMatriz(MatrizTexto m) {
     }
 }
 
+/**
+ * @brief Pesquisa por uma substring dentro de todas as linhas da matriz.
+ * Imprime as linhas onde a palavra ocorre.
+ * @param m A matriz de texto.
+ * @param palavra O termo a pesquisar (substring).
+ * @note **Complexidade:** O(L * S), onde L é o nº de linhas e S o tamanho médio das strings (uso de strstr).
+ */
 void pesquisarTexto(MatrizTexto m, const char *palavra) {
     int encontrada = 0;
     for (int i = 0; i < m.linhas_usadas; i++) {//percorremos as linhas e pesquisamos por o que queremos utilizando a comparaçao de strings
@@ -85,10 +123,18 @@ void pesquisarTexto(MatrizTexto m, const char *palavra) {
         printf("%d linha(s) encontradas.\n", encontrada);
 }
 
+/**
+ * @brief Remove uma linha num índice específico.
+ * Desloca todas as linhas subsequentes para a esquerda para tapar o buraco.
+ * @param m Ponteiro para a matriz.
+ * @param indice O índice da linha a remover.
+ * @return int 1 se sucesso, 0 se índice inválido.
+ * @note **Complexidade:** O(N) no pior caso, pois necessita de deslocar elementos.
+ */
 int removerLinha(MatrizTexto *m, int indice) {//usamos *m porque queremos alterar a funcao no main, e nao uma copia de m
     if (indice < 0 || indice >= m->linhas_usadas) {//verificacao simples
         printf("Indice fora dos limites!\n");
-        return 0;
+        return 0; 
     }
     free(m->linhas[indice]);// limpamos a linha antes de a eliminar
     for (int i = indice; i < m->linhas_usadas - 1; i++) {// fazemos ate i+1 pois dentro do ciclo vamos ate i+1 o que iria tentar ler memoria fora do array
@@ -99,6 +145,12 @@ int removerLinha(MatrizTexto *m, int indice) {//usamos *m porque queremos altera
     return 1;
 }
 
+/**
+ * @brief Remove a primeira linha encontrada que seja idêntica ao conteúdo fornecido.
+ * @param m Ponteiro para a matriz.
+ * @param frase A frase exata a remover.
+ * @return int 1 se removeu, 0 se não encontrou.
+ */
 int removerLinhaPorConteudo(MatrizTexto *m, const char *frase) {
     for (int i = 0; i < m->linhas_usadas; i++) {
         if (strcmp(m->linhas[i], frase) == 0) {
@@ -112,6 +164,11 @@ int removerLinhaPorConteudo(MatrizTexto *m, const char *frase) {
 // =============================================================
 //  Funcoes auxiliares de tokens (R1.1, R1.2)
 // =============================================================
+/**
+ * @brief Cria uma matriz de tokens (Vocabulário).
+ * @param capacidade_inicial Capacidade inicial.
+ * @return MatrizTokens Estrutura inicializada.
+ */
 MatrizTokens criarMatrizTokens(int capacidade_inicial) {
     MatrizTokens t;//variavel do tipo matriz tokens que contem(tokens, tokens usados, capacidade)
     t.tokens = malloc(capacidade_inicial * sizeof(char*));//alocamos espaço para os endereços onde vao ficar os tokens
@@ -124,6 +181,12 @@ MatrizTokens criarMatrizTokens(int capacidade_inicial) {
     return t;
 }
 
+/**
+ * @brief Adiciona um token ao vocabulário.
+ * @param t Ponteiro para a matriz de tokens.
+ * @param token String do token a adicionar.
+ * @return int 1 sucesso, 0 erro.
+ */
 int adicionarToken(MatrizTokens *t, const char *token) {
     if (t->usados == t->capacidade) {
         int nova_cap = t->capacidade * 2;
@@ -148,6 +211,10 @@ int adicionarToken(MatrizTokens *t, const char *token) {
     return 1;
 }
 
+/**
+ * @brief Lista todos os tokens e os seus índices (IDs).
+ * @param t Matriz de tokens.
+ */
 void listarTokens(MatrizTokens t) {
     printf("\nTokens armazenados (%d):\n", t.usados);
     for (int i = 0; i < t.usados; i++) {
@@ -155,6 +222,13 @@ void listarTokens(MatrizTokens t) {
     }
 }
 
+/**
+ * @brief Remove um token pelo seu índice (ID).
+ * @warning Ao remover um token, os IDs dos tokens seguintes mudam!
+ * @param t Ponteiro para a matriz.
+ * @param indice Índice a remover.
+ * @return int 1 sucesso, 0 erro.
+ */
 int removerToken(MatrizTokens *t, int indice) {
     if (indice < 0 || indice >= t->usados) {
         printf("Indice de token fora dos limites!\n");
@@ -170,6 +244,12 @@ int removerToken(MatrizTokens *t, int indice) {
     return 1;
 }
 
+/**
+ * @brief Remove um token pelo seu conteúdo textual.
+ * @param t Ponteiro para a matriz.
+ * @param token String do token.
+ * @return int 1 sucesso, 0 erro.
+ */
 int removerTokenPorConteudo(MatrizTokens *t, const char *token) {
     for (int i = 0; i < t->usados; i++) {
         if (strcmp(t->tokens[i], token) == 0) {
@@ -180,6 +260,10 @@ int removerTokenPorConteudo(MatrizTokens *t, const char *token) {
     return 0;
 }
 
+/**
+ * @brief Liberta a memória da matriz de tokens.
+ * @param t Matriz a libertar.
+ */
 void libertarTokens(MatrizTokens t) {
     for (int i = 0; i < t.usados; i++) {
         free(t.tokens[i]);
