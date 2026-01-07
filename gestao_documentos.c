@@ -1,6 +1,4 @@
-// ============================================================================
 // GESTAO_DOCUMENTOS.C - Gestão de Documentos e Lista Ligada
-// ============================================================================
 // Este ficheiro implementa uma lista ligada de documentos, onde cada documento
 // contém: título, texto original, IDs de tokens, e vetor TF (Term Frequency).
 
@@ -9,9 +7,7 @@
 #include <string.h>              // Para memcpy, strlen (manipulação de strings)
 
 
-// ============================================================================
 // Funções Auxiliares (Privadas a este ficheiro)
-// ============================================================================
 
 // duplicarString: Cria uma cópia independente de uma string
 // IMPORTANTE: A string retornada deve ser libertada com free()
@@ -121,9 +117,9 @@ static void priv_libertarDocNode(TK_TF_NODE *doc) {
 }
 
 
-// ============================================================================
+
 // Funções da Lista Ligada (R2.1 e R2.2)
-// ============================================================================
+
 
 // criarListaDocumentos: Cria e inicializa uma lista de documentos vazia
 // Apenas associa o vocabulário que será usado pelos documentos
@@ -212,9 +208,8 @@ void libertarListaDocumentos(LL_TK_TF *lista) {
 }
 
 
-// ============================================================================
+
 // Funções de Manipulação Avançada
-// ============================================================================
 
 // obterDocumentoPorIndice: Devolve o documento que está numa determinada posição
 // Se o índice for inválido, devolve NULL

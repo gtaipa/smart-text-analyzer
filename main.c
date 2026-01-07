@@ -61,7 +61,7 @@ void testar_R1_3_BPE_Manual() {
         printf("[%s] ", tokens.tokens[i]);
     }
     printf("\n");
-    // ---------------------------------------------------------
+
 
     if (tokens.usados == 8) {
         printf("[SUCESSO] Numero de tokens gerados correto (8).\n");

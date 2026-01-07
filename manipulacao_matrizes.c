@@ -161,9 +161,8 @@ int removerLinhaPorConteudo(MatrizTexto *m, const char *frase) {
     return 0;
 }
 
-// =============================================================
 //  Funcoes auxiliares de tokens (R1.1, R1.2)
-// =============================================================
+
 /**
  * @brief Cria uma matriz de tokens (Vocabulário).
  * @param capacidade_inicial Capacidade inicial.

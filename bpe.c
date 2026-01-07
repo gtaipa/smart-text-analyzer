@@ -1,6 +1,5 @@
-// ============================================================================
+
 // BPE.C - Implementação do algoritmo Byte Pair Encoding (BPE)
-// ============================================================================
 // Este ficheiro implementa o algoritmo BPE que cria um vocabulário de tokens
 // a partir de um texto, fundindo pares de caracteres/tokens mais frequentes.
 
@@ -10,9 +9,9 @@
 #include <string.h>      // Para strcmp, strcpy, strdup (manipulação de strings)
 
 
-// ============================================================================
+
 // ESTRUTURAS DE DADOS INTERNAS (Privadas ao BPE)
-// ============================================================================
+
 
 // TokenNode: Representa um único token numa lista ligada
 // Exemplo: Se temos "gato", criamos 4 nós: [g] <-> [a] <-> [t] <-> [o]
@@ -40,9 +39,7 @@ typedef struct ParFreq {
 #define HASH_SIZE 2003               // Tamanho da hash table (número primo para menos colisões)
 
 
-// ============================================================================
 // FUNÇÕES AUXILIARES (Gestão de Listas e Hash)
-// ============================================================================
 
 // hash_func: Calcula um índice na hash table para uma string
 // Usa o algoritmo DJB2 que é eficiente para strings
@@ -114,9 +111,7 @@ static void libertarLista(FraseLista *lista) {
 }
 
 
-// ============================================================================
 // IMPLEMENTAÇÃO LÓGICA BPE
-// ============================================================================
 
 // inicializarTokensUnicos: PASSO 1 do BPE
 // Identifica todos os caracteres únicos no texto e adiciona ao vocabulário
@@ -322,9 +317,7 @@ static void fundirParNoCorpus(FraseLista *corpus, int qtd_linhas, const char *pa
 }
 
 
-// ============================================================================
 // FUNÇÃO PRINCIPAL (A que o main chama)
-// ============================================================================
 
 /**
  * @brief Calcula o alfabeto de tokens usando BPE até atingir o número desejado.
