@@ -1,5 +1,0 @@
-var searchData=
-[
-  ['pesquisardocumentosportokenid_0',['pesquisarDocumentosPorTokenID',['../gestao__documentos_8c.html#a64de08b4e635af52a46107697a96c932',1,'pesquisarDocumentosPorTokenID(LL_TK_TF lista, int token_id):&#160;gestao_documentos.c'],['../gestao__documentos_8h.html#a64de08b4e635af52a46107697a96c932',1,'pesquisarDocumentosPorTokenID(LL_TK_TF lista, int token_id):&#160;gestao_documentos.c']]],
-  ['pesquisartexto_1',['pesquisarTexto',['../manipulacao__matrizes_8c.html#a59f71ae2560361e93f8e5b9209fde824',1,'pesquisarTexto(MatrizTexto m, const char *palavra):&#160;manipulacao_matrizes.c'],['../manipulacao__matrizes_8h.html#a59f71ae2560361e93f8e5b9209fde824',1,'pesquisarTexto(MatrizTexto m, const char *palavra):&#160;manipulacao_matrizes.h']]]
-];
